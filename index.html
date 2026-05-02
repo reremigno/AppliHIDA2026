@@ -962,64 +962,107 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
     Tu passes <strong>deux oraux différents</strong> en juin. L'oral de spécialité HIDA (9 ou 10 juin) évalue ton travail de l'année avec tes portfolios. Le Grand Oral (fin juin) évalue ta capacité à construire et défendre une argumentation personnelle sur une question problématisée.
   </div>
 
-  <div class="compare-table-wrap">
-  <table class="compare-table">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Oral de spécialité HIDA</th>
-        <th>Grand Oral</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Date</td>
-        <td class="oral-spe">9 ou 10 juin 2026 (selon convocation)</td>
-        <td class="grand-oral">Fin juin 2026 (date à confirmer)</td>
-      </tr>
-      <tr>
-        <td>Durée totale</td>
-        <td class="oral-spe"><strong>30 minutes</strong> — sans temps de préparation préalable</td>
-        <td class="grand-oral"><strong>40 minutes</strong> au total : 20 min de préparation + 20 min devant le jury (10 min exposé + 10 min échange)</td>
-      </tr>
-      <tr>
-        <td>Coefficient</td>
-        <td class="oral-spe">Moitié de la note de spécialité (coeff. 8 sur 16)</td>
-        <td class="grand-oral">Coefficient <strong>10</strong> en voie générale (14 en voie technologique)</td>
-      </tr>
-      <tr>
-        <td>Ce que l'on évalue</td>
-        <td class="oral-spe">Le travail de l'année : tes deux portfolios, ta culture artistique, ta capacité à analyser des œuvres</td>
-        <td class="grand-oral">Ta capacité à construire et défendre une argumentation personnelle sur une question que tu as choisie</td>
-      </tr>
-      <tr>
-        <td>Déroulement</td>
-        <td class="oral-spe"><strong>Tirage au sort</strong> d'un des 2 portfolios → <strong>15 min</strong> de présentation → <strong>15 min</strong> d'entretien (le jury peut aussi interroger sur le 2e portfolio)</td>
-        <td class="grand-oral">
-          <strong>20 min</strong> de préparation seul → <strong>10 min</strong> de présentation sans notes → <strong>10 min</strong> d'échange avec le jury<br>
-          <span style="display:inline-block;margin-top:0.5rem;padding:0.3rem 0.6rem;background:rgba(201,146,26,0.15);border:1px solid rgba(201,146,26,0.4);border-radius:3px;font-size:0.8em;color:var(--ochre);">
-            ⚠️ Nouveauté 2024 (reconduite en 2026) : la phase «&nbsp;projet d'orientation&nbsp;» de 5 min a été supprimée. L'échange de 10 min avec le jury intègre désormais les questions sur le parcours et l'orientation. <em>Source : eduscol.education.fr</em>
-          </span>
-        </td>
-      </tr>
-      <tr>
-        <td>Notes autorisées</td>
-        <td class="oral-spe">Aucune note — présentation libre, appuyée sur les images du portfolio affichées à l'écran</td>
-        <td class="grand-oral">Notes autorisées pendant les 20 min de préparation uniquement — interdites face au jury</td>
-      </tr>
-      <tr>
-        <td>Composition du jury</td>
-        <td class="oral-spe">Enseignants d'Histoire des Arts d'un autre établissement — jamais ceux de la classe</td>
-        <td class="grand-oral">2 examinateurs extérieurs (dont 1 issu de la spécialité) — jamais ceux de la classe</td>
-      </tr>
-      <tr>
-        <td>Projet d'orientation</td>
-        <td class="oral-spe">Le jury peut aborder les projets post-bac, sans que ce soit un moment dédié</td>
-        <td class="grand-oral">Intégré à l'échange de 10 min — le jury peut questionner le candidat sur son orientation ; ce n'est plus une phase dédiée et séparée (modification entrée en vigueur à la session 2024)</td>
-      </tr>
-    </tbody>
-  </table>
-  </div><!-- /compare-table-wrap -->
+  <style>
+  .compare-mobile { display: flex; flex-direction: column; gap: 0; margin-bottom: 1.5rem; border: 1px solid var(--light-dust); border-radius: 8px; overflow: hidden; }
+  .compare-row { display: flex; flex-direction: column; border-bottom: 1px solid var(--light-dust); }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dust);
+    background: rgba(26,21,16,0.05);
+    padding: 0.45rem 0.9rem;
+    border-bottom: 1px solid var(--light-dust);
+  }
+  .compare-cols { display: grid; grid-template-columns: 1fr 1fr; }
+  .compare-cell {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  .compare-cell.hida { border-left: 3px solid var(--sage); background: rgba(74,103,65,0.04); }
+  .compare-cell.grand { border-left: 3px solid var(--ochre); background: rgba(201,146,26,0.04); }
+  .compare-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .compare-cell.hida .compare-label { color: var(--sage); }
+  .compare-cell.grand .compare-label { color: var(--ochre); }
+  </style>
+
+  <div class="compare-mobile">
+
+    <div class="compare-row">
+      <div class="compare-subtitle">Date</div>
+      <div class="compare-cols">
+        <div class="compare-cell hida"><div class="compare-label">Oral spé HIDA</div>9 ou 10 juin 2026 (selon convocation)</div>
+        <div class="compare-cell grand"><div class="compare-label">Grand Oral</div>Fin juin 2026 (date à confirmer)</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-subtitle">Durée totale</div>
+      <div class="compare-cols">
+        <div class="compare-cell hida"><div class="compare-label">Oral spé HIDA</div><strong>30 minutes</strong> — sans préparation préalable</div>
+        <div class="compare-cell grand"><div class="compare-label">Grand Oral</div><strong>40 min</strong> : 20 min de prépa + 10 min exposé + 10 min échange</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-subtitle">Coefficient</div>
+      <div class="compare-cols">
+        <div class="compare-cell hida"><div class="compare-label">Oral spé HIDA</div>Moitié de la note de spécialité (coeff. 8 sur 16)</div>
+        <div class="compare-cell grand"><div class="compare-label">Grand Oral</div>Coeff. <strong>10</strong> en voie générale (14 en voie technologique)</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-subtitle">Ce que l'on évalue</div>
+      <div class="compare-cols">
+        <div class="compare-cell hida"><div class="compare-label">Oral spé HIDA</div>Tes deux portfolios, ta culture artistique, ta capacité à analyser des œuvres</div>
+        <div class="compare-cell grand"><div class="compare-label">Grand Oral</div>Ta capacité à construire et défendre une argumentation personnelle sur une question que tu as choisie</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-subtitle">Déroulement</div>
+      <div class="compare-cols">
+        <div class="compare-cell hida"><div class="compare-label">Oral spé HIDA</div><strong>Tirage au sort</strong> d'un portfolio → <strong>15 min</strong> de présentation → <strong>15 min</strong> d'entretien (le jury peut interroger sur le 2e portfolio)</div>
+        <div class="compare-cell grand"><div class="compare-label">Grand Oral</div><strong>20 min</strong> de prépa seul → <strong>10 min</strong> de présentation sans notes → <strong>10 min</strong> d'échange avec le jury<br><span style="display:inline-block;margin-top:0.4rem;padding:0.25rem 0.5rem;background:rgba(201,146,26,0.15);border:1px solid rgba(201,146,26,0.4);border-radius:3px;font-size:0.78em;color:var(--ochre);">⚠️ Nouveauté 2024 (reconduite en 2026) : la phase «&nbsp;projet d'orientation&nbsp;» de 5 min a été supprimée. <em>Source : eduscol.education.fr</em></span></div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-subtitle">Notes autorisées</div>
+      <div class="compare-cols">
+        <div class="compare-cell hida"><div class="compare-label">Oral spé HIDA</div>Aucune note — présentation appuyée sur les images du portfolio à l'écran</div>
+        <div class="compare-cell grand"><div class="compare-label">Grand Oral</div>Autorisées pendant les 20 min de prépa uniquement — interdites face au jury</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-subtitle">Composition du jury</div>
+      <div class="compare-cols">
+        <div class="compare-cell hida"><div class="compare-label">Oral spé HIDA</div>Enseignants d'Histoire des Arts d'un autre établissement — jamais ceux de la classe</div>
+        <div class="compare-cell grand"><div class="compare-label">Grand Oral</div>2 examinateurs extérieurs (dont 1 issu de la spécialité) — jamais ceux de la classe</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-subtitle">Projet d'orientation</div>
+      <div class="compare-cols">
+        <div class="compare-cell hida"><div class="compare-label">Oral spé HIDA</div>Le jury peut aborder les projets post-bac, sans que ce soit un moment dédié</div>
+        <div class="compare-cell grand"><div class="compare-label">Grand Oral</div>Intégré à l'échange de 10 min — plus de phase dédiée et séparée (modification en vigueur depuis la session 2024)</div>
+      </div>
+    </div>
+
+  </div><!-- /compare-mobile -->
 
   <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; font-style:italic; margin-bottom:1.5rem;">Checklist oral de spécialité HIDA</h3>
 
