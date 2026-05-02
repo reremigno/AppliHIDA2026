@@ -1,0 +1,2572 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planning Bac — Histoire des Arts · Terminale · Académie de Grenoble</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════
+   VARIABLES & RESET
+══════════════════════════════════════════════ */
+:root {
+  --ink: #1a1510;
+  --paper: #f5f0e8;
+  --aged: #e8dfc8;
+  --rust: #b84c1e;
+  --ochre: #c9921a;
+  --sage: #4a6741;
+  --slate: #3d4f5c;
+  --dust: #8c7c6a;
+  --light-dust: #d4c8b8;
+  --gold: #c9921a;
+  --cream: #faf6ee;
+  /* Hauteur de la barre de nav mobile */
+  --nav-h: 64px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  /* espace pour la barre de nav fixée en bas */
+  padding-bottom: var(--nav-h);
+}
+
+/* Texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ══════════════════════════════════════════════
+   HEADER — mobile-first
+══════════════════════════════════════════════ */
+header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1.4rem 1rem 1.2rem;
+  position: relative;
+  overflow: hidden;
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rust), var(--ochre), var(--sage));
+}
+.header-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.header-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.header-title em { font-style: italic; color: var(--ochre); }
+.header-sub {
+  margin-top: 0.35rem;
+  font-size: 0.82rem;
+  color: var(--light-dust);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+.header-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--light-dust);
+  line-height: 1.9;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem;
+}
+
+/* ══════════════════════════════════════════════
+   NAVIGATION — barre en bas sur mobile (app-like)
+══════════════════════════════════════════════ */
+
+/* Masquer la nav classique en haut sur mobile */
+.nav-tabs {
+  display: none;
+}
+
+/* Barre de navigation fixée en bas — mobile only */
+#bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  z-index: 500;
+  /* safe area pour les iPhone avec encoche */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.bnav-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--dust);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  padding: 0.5rem 0.25rem;
+  transition: color 0.2s;
+  font-family: 'DM Mono', monospace;
+  -webkit-tap-highlight-color: transparent;
+}
+.bnav-btn .bnav-icon { font-size: 1.3rem; line-height: 1; }
+.bnav-btn .bnav-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.bnav-btn.active {
+  color: var(--ochre);
+}
+.bnav-btn.active .bnav-icon {
+  filter: drop-shadow(0 0 4px rgba(201,146,26,0.5));
+}
+
+/* ══════════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════════ */
+main {
+  padding: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── SECTIONS (tabs) ── */
+.tab-section { display: none; }
+.tab-section.active { display: block; }
+
+/* ══════════════════════════════════════════════
+   WEEK CARDS
+══════════════════════════════════════════════ */
+.week-block {
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--light-dust);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--cream);
+  box-shadow: 0 2px 8px rgba(26,21,16,0.06);
+}
+.week-header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.week-header:active { background: #2c2520; }
+.week-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ochre);
+}
+.week-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  font-style: italic;
+  margin-top: 0.1rem;
+}
+.week-toggle { font-size: 1.2rem; transition: transform 0.3s; opacity: 0.6; }
+.week-block.open .week-toggle { transform: rotate(180deg); }
+.week-body { padding: 1rem; display: none; }
+.week-block.open .week-body { display: block; }
+
+/* ══════════════════════════════════════════════
+   TASK LIST
+══════════════════════════════════════════════ */
+.task-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+  transition: background 0.15s;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  /* zone de tap plus grande sur mobile */
+  min-height: 44px;
+}
+.task-item:active { background: rgba(26,21,16,0.06); }
+.task-item input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--dust);
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 1px;
+  position: relative;
+  transition: all 0.2s;
+}
+.task-item input[type="checkbox"]:checked { background: var(--sage); border-color: var(--sage); }
+.task-item input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: -1px; left: 2px;
+  color: white; font-size: 13px; font-weight: bold;
+}
+.task-item.done .task-text { text-decoration: line-through; color: var(--dust); }
+.task-text { flex: 1; font-size: 0.9rem; line-height: 1.45; }
+.task-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+.tag-portfolio { background: rgba(184,76,30,0.12); color: var(--rust); border: 1px solid rgba(184,76,30,0.3); }
+.tag-oral { background: rgba(74,103,65,0.12); color: var(--sage); border: 1px solid rgba(74,103,65,0.3); }
+.tag-ecrit { background: rgba(61,79,92,0.12); color: var(--slate); border: 1px solid rgba(61,79,92,0.3); }
+.tag-grand-oral { background: rgba(201,146,26,0.12); color: var(--ochre); border: 1px solid rgba(201,146,26,0.4); }
+.tag-revision { background: rgba(140,124,106,0.15); color: var(--dust); border: 1px solid rgba(140,124,106,0.3); }
+.tag-urgent { background: rgba(184,76,30,0.25); color: var(--rust); border: 1px solid var(--rust); font-weight: 600; }
+.task-item.priority-haute { border-left-color: var(--rust); }
+.task-item.priority-moyenne { border-left-color: var(--ochre); }
+.task-item.priority-basse { border-left-color: var(--light-dust); }
+
+/* ══════════════════════════════════════════════
+   PROGRESS BAR
+══════════════════════════════════════════════ */
+.progress-wrap { margin: 0.75rem 0 1rem; }
+.progress-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--dust); margin-bottom: 0.3rem; }
+.progress-bar { height: 6px; background: var(--light-dust); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--sage), var(--ochre)); border-radius: 3px; transition: width 0.4s ease; }
+
+/* ══════════════════════════════════════════════
+   ALERT / INFO BOXES
+══════════════════════════════════════════════ */
+.alert-box {
+  background: rgba(184,76,30,0.07);
+  border: 1px solid rgba(184,76,30,0.3);
+  border-left: 4px solid var(--rust);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.2rem;
+  font-size: 0.88rem;
+}
+.alert-box strong { color: var(--rust); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.35rem; }
+.info-box {
+  background: rgba(74,103,65,0.07);
+  border: 1px solid rgba(74,103,65,0.25);
+  border-left: 4px solid var(--sage);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.2rem;
+  font-size: 0.88rem;
+}
+.info-box strong { color: var(--sage); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.35rem; }
+
+/* ══════════════════════════════════════════════
+   TABLEAU COMPARATIF — scrollable sur mobile
+══════════════════════════════════════════════ */
+.compare-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.2rem 0;
+  border-radius: 6px;
+  border: 1px solid var(--light-dust);
+}
+.compare-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 520px; }
+.compare-table th {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 300;
+}
+.compare-table th:first-child { background: #2c2520; color: var(--dust); font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-style: normal; }
+.compare-table td { padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--light-dust); vertical-align: top; }
+.compare-table tr:nth-child(even) td { background: rgba(26,21,16,0.025); }
+.compare-table td:first-child { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--dust); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; white-space: nowrap; }
+.compare-table .oral-spe { border-left: 3px solid var(--sage); }
+.compare-table .grand-oral { border-left: 3px solid var(--ochre); }
+
+/* ── Check list ── */
+.check-list { list-style: none; }
+.check-list li { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.45rem 0; min-height: 44px; }
+.check-list input[type="checkbox"] {
+  appearance: none;
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--dust);
+  border-radius: 3px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+  transition: all 0.2s;
+}
+.check-list input[type="checkbox"]:checked { background: var(--sage); border-color: var(--sage); }
+.check-list input[type="checkbox"]:checked::after {
+  content: '✓'; position: absolute; top: -2px; left: 2px;
+  color: white; font-size: 11px; font-weight: bold;
+}
+
+/* ══════════════════════════════════════════════
+   FLIPCARDS
+══════════════════════════════════════════════ */
+.flipcard-section { margin-top: 1.5rem; }
+.flipcard-filter {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+.filter-btn {
+  background: none;
+  border: 1.5px solid var(--light-dust);
+  color: var(--dust);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.filter-btn.active {
+  border-color: var(--ochre);
+  color: var(--ochre);
+  background: rgba(201,146,26,0.1);
+}
+/* 1 colonne sur mobile */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
+.flipcard {
+  perspective: 1000px;
+  height: 260px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.flipcard-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+}
+.flipcard.flipped .flipcard-inner { transform: rotateY(180deg); }
+.flipcard-front, .flipcard-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.flipcard-front { background: var(--cream); border: 1px solid var(--light-dust); border-top: 3px solid var(--ochre); }
+.flipcard-back { background: var(--ink); color: var(--paper); transform: rotateY(180deg); border-top: 3px solid var(--sage); }
+.card-theme { font-family: 'DM Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dust); margin-bottom: 0.4rem; }
+.flipcard-back .card-theme { color: var(--light-dust); }
+.card-question { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic; font-weight: 400; line-height: 1.35; flex: 1; display: flex; align-items: center; }
+.card-hint { font-size: 0.65rem; color: var(--dust); font-family: 'DM Mono', monospace; text-align: right; }
+.flipcard-back .card-hint { color: rgba(245,240,232,0.4); }
+.card-answer { font-size: 0.84rem; line-height: 1.5; flex: 1; display: flex; align-items: center; color: var(--aged); }
+.score-bar { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; flex-wrap: wrap; }
+.score-val { color: var(--sage); font-weight: 500; }
+.score-total { color: var(--dust); }
+
+/* ══════════════════════════════════════════════
+   BILAN PERSO
+══════════════════════════════════════════════ */
+.bilan-section { margin-top: 1.2rem; }
+.bilan-card { background: var(--cream); border: 1px solid var(--light-dust); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
+.bilan-card-header { background: rgba(26,21,16,0.05); padding: 0.6rem 1rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dust); border-bottom: 1px solid var(--light-dust); }
+.bilan-card-body { padding: 1rem; }
+.bilan-field { margin-bottom: 0.85rem; }
+.bilan-field label { display: block; margin-bottom: 0.3rem; font-family: 'DM Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--dust); }
+.bilan-field input, .bilan-field textarea, .bilan-field select {
+  width: 100%;
+  background: var(--paper);
+  border: 1px solid var(--light-dust);
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 1rem; /* 16px : évite le zoom iOS sur focus */
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+.bilan-field input:focus, .bilan-field textarea:focus { border-color: var(--ochre); background: var(--cream); }
+.bilan-field textarea { min-height: 80px; }
+
+/* ══════════════════════════════════════════════
+   SECTION TITRES
+══════════════════════════════════════════════ */
+.section-heading { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; font-style: italic; margin-bottom: 0.2rem; }
+.section-sub { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--dust); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+.section-divider { border: none; border-top: 1px solid var(--light-dust); margin: 1.5rem 0; }
+
+/* ══════════════════════════════════════════════
+   TIMELINE
+══════════════════════════════════════════════ */
+.timeline { position: relative; padding-left: 1.75rem; }
+.timeline::before { content: ''; position: absolute; left: 0.5rem; top: 0.5rem; bottom: 0; width: 1px; background: var(--light-dust); }
+.timeline-item { position: relative; margin-bottom: 1.3rem; }
+.timeline-dot { position: absolute; left: -1.35rem; top: 0.35rem; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--cream); box-shadow: 0 0 0 2px var(--light-dust); }
+.timeline-item.event-key .timeline-dot { background: var(--rust); box-shadow: 0 0 0 2px var(--rust); }
+.timeline-item.event-oral .timeline-dot { background: var(--sage); box-shadow: 0 0 0 2px var(--sage); }
+.timeline-item.event-ecrit .timeline-dot { background: var(--slate); box-shadow: 0 0 0 2px var(--slate); }
+.timeline-item.event-deadline .timeline-dot { background: var(--ochre); box-shadow: 0 0 0 2px var(--ochre); }
+.timeline-date { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--dust); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.15rem; }
+.timeline-event-title { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.12rem; }
+.timeline-event-desc { font-size: 0.8rem; color: var(--dust); line-height: 1.45; }
+
+/* ══════════════════════════════════════════════
+   LEGEND
+══════════════════════════════════════════════ */
+.legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin-bottom: 1.5rem; }
+.legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-family: 'DM Mono', monospace; color: var(--dust); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ══════════════════════════════════════════════
+   SAVE BTN
+══════════════════════════════════════════════ */
+.save-btn { background: var(--ink); color: var(--paper); border: none; padding: 0.7rem 1.4rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 6px; transition: background 0.2s; margin-top: 1rem; min-height: 44px; }
+.save-btn:active { background: var(--rust); }
+
+/* ══════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════ */
+#save-toast {
+  position: fixed;
+  bottom: calc(var(--nav-h) + 1rem);
+  left: 1rem; right: 1rem;
+  text-align: center;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--sage);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.25s, transform 0.25s;
+  pointer-events: none;
+  z-index: 9999;
+}
+#save-toast.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════════
+   FAB SAVE — masqué sur mobile (on utilise la bottom nav)
+══════════════════════════════════════════════ */
+#fab-save { display: none; }
+
+/* ══════════════════════════════════════════════
+   SAVE MODAL
+══════════════════════════════════════════════ */
+#save-modal { display: none; position: fixed; inset: 0; background: rgba(26,21,16,0.65); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(3px); }
+#save-modal.open { display: flex; }
+.save-modal-box { background: var(--cream); border: 1px solid var(--light-dust); border-top: 4px solid var(--ochre); border-radius: 12px; padding: 1.5rem; max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(26,21,16,0.4); text-align: center; }
+.save-modal-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.save-modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; font-style: italic; color: var(--ink); margin-bottom: 0.9rem; }
+.save-modal-body { font-size: 0.88rem; color: var(--dust); line-height: 1.65; margin-bottom: 1.2rem; }
+.save-modal-shortcut { display: inline-block; background: var(--paper); border: 1px solid var(--light-dust); border-radius: 6px; padding: 0.6rem 1rem; font-family: 'DM Mono', monospace; font-size: 0.78rem; line-height: 1.9; color: var(--ink); }
+kbd { display: inline-block; background: var(--ink); color: var(--paper); font-family: 'DM Mono', monospace; font-size: 0.75rem; padding: 0.15rem 0.45rem; border-radius: 3px; font-style: normal; }
+.save-modal-actions { display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.save-modal-btn { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.7rem 1.3rem; border-radius: 6px; cursor: pointer; border: none; transition: all 0.2s; min-height: 44px; }
+.save-modal-btn.primary { background: var(--ink); color: var(--paper); }
+
+/* ══════════════════════════════════════════════
+   DESKTOP — à partir de 700px, layout enrichi
+══════════════════════════════════════════════ */
+@media (min-width: 700px) {
+  body { padding-bottom: 0; font-size: 15px; }
+
+  /* Header en 2 colonnes */
+  .header-inner { flex-direction: row; align-items: flex-end; gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+  header { padding: 3rem 2rem 2.5rem; }
+  .header-title { font-size: clamp(2.2rem, 4vw, 3.5rem); }
+  .header-meta { text-align: right; flex-shrink: 0; background: none; border: none; padding: 0; }
+
+  /* Masquer la bottom nav, afficher les tabs en haut */
+  #bottom-nav { display: none; }
+  .nav-tabs {
+    display: flex;
+    background: var(--ink);
+    padding: 0 2rem;
+    overflow-x: auto;
+    gap: 0;
+  }
+  .nav-tab {
+    background: none;
+    border: none;
+    color: var(--light-dust);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.4rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    bottom: -3px;
+  }
+  .nav-tab:hover { color: var(--paper); }
+  .nav-tab.active { color: var(--ochre); border-bottom-color: var(--ochre); background: rgba(201,146,26,0.08); }
+
+  /* Main centré avec max-width */
+  main { max-width: 900px; margin: 0 auto; padding: 2rem; }
+
+  /* Save FAB visible sur desktop */
+  #fab-save {
+    display: flex;
+    position: fixed;
+    bottom: 1.8rem; right: 1.8rem;
+    z-index: 1000;
+    align-items: center;
+    gap: 0.55rem;
+    background: var(--ink);
+    color: var(--paper);
+    border: 2px solid var(--ochre);
+    border-radius: 50px;
+    padding: 0.75rem 1.3rem 0.75rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(26,21,16,0.3);
+    transition: all 0.2s;
+    animation: fab-pulse 3s ease-in-out infinite;
+  }
+  #fab-save:hover { background: var(--ochre); color: var(--ink); border-color: var(--ochre); transform: translateY(-2px); animation: none; }
+
+  /* Toast en bas à droite sur desktop */
+  #save-toast { left: auto; right: 2rem; bottom: 2rem; text-align: left; }
+
+  /* Flipcards en grille */
+  .cards-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+  /* Section heading plus grande */
+  .section-heading { font-size: 2rem; }
+
+  /* Tableau sans wrapper scroll */
+  .compare-table { min-width: unset; }
+
+  /* Hover sur les tasks (souris) */
+  .task-item:hover { background: rgba(26,21,16,0.04); }
+  .filter-btn:hover { border-color: var(--ochre); color: var(--ochre); background: rgba(201,146,26,0.08); }
+  .save-btn:hover { background: var(--rust); }
+}
+
+@keyframes fab-pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(26,21,16,0.25), 0 0 0 0 rgba(201,146,26,0.5); }
+  50% { box-shadow: 0 4px 20px rgba(26,21,16,0.25), 0 0 0 8px rgba(201,146,26,0); }
+}
+.fab-icon { font-size: 1.1rem; }
+.fab-label { font-size: 0.72rem; }
+
+/* ── IMPRESSION ── */
+@media print {
+  .nav-tabs, #bottom-nav, #fab-save, #save-modal { display: none !important; }
+  .tab-section { display: block !important; page-break-before: always; }
+  .week-body { display: block !important; }
+  body { padding-bottom: 0; }
+}
+.save-modal-btn.primary:hover { background: var(--ochre); color: var(--ink); }
+.save-modal-btn.secondary {
+  background: transparent;
+  color: var(--dust);
+  border: 1px solid var(--light-dust);
+}
+.save-modal-btn.secondary:hover { border-color: var(--dust); color: var(--ink); }
+.save-modal-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--light-dust);
+  letter-spacing: 0.06em;
+}
+@media print {
+  .nav-tabs { display: none; }
+  .tab-section { display: block !important; page-break-before: always; }
+  .week-body { display: block !important; }
+  #fab-save, #save-modal { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOAST ── -->
+<div id="save-toast">✓ Progression sauvegardée</div>
+
+<!-- ── SAVE MODAL ── -->
+<div id="save-modal" onclick="closeSaveModal(event)">
+  <div class="save-modal-box">
+    <div class="save-modal-icon">💾</div>
+    <div class="save-modal-title">Sauvegarder la progression</div>
+    <div class="save-modal-body">
+      Les données sont stockées <strong>dans ce navigateur, sur cet appareil.</strong><br>
+      Elles persistent entre les sessions — inutile de les exporter.<br><br>
+      <span class="save-modal-shortcut">
+        Sur ordinateur &nbsp;→&nbsp; <kbd>Ctrl</kbd> + <kbd>S</kbd><br>
+        Sur Mac &nbsp;→&nbsp; <kbd>⌘</kbd> + <kbd>S</kbd>
+      </span>
+    </div>
+    <div class="save-modal-actions">
+      <button class="save-modal-btn primary" onclick="saveAll(); closeSaveModal()">Sauvegarder maintenant</button>
+      <button class="save-modal-btn secondary" onclick="closeSaveModal()">Fermer</button>
+    </div>
+    <div class="save-modal-note">La sauvegarde reste sur cet appareil · Aucun export possible</div>
+  </div>
+</div>
+
+<!-- ── FLOATING SAVE BUTTON ── -->
+<button id="fab-save" onclick="openSaveModal()" title="Sauvegarder la progression">
+  <span class="fab-icon">💾</span>
+  <span class="fab-label">Sauvegarder</span>
+</button>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-title">Planning <em>Bac</em><br>Histoire des Arts</div>
+      <div class="header-sub">Terminale · Académie de Grenoble · Session 2025–2026</div>
+    </div>
+    <div class="header-meta">
+      📁 Oral HIDA : 9–10 juin 2026<br>
+      ✍️ Écrit HIDA : 16 juin 2026<br>
+      🎤 Grand Oral : fin juin 2026<br>
+      💾 Clé USB portfolio : avant le 15 mai<br>
+      <span id="countdown-display" style="margin-top:0.4rem;display:block;font-size:0.8rem;color:var(--ochre);font-weight:500;letter-spacing:0.05em;"></span>
+      <span id="countdown-ecrit" style="margin-top:0.15rem;display:block;font-size:0.8rem;font-weight:500;letter-spacing:0.05em;"></span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="showTab('planning', this)">📅 Planning</button>
+  <button class="nav-tab" onclick="showTab('oraux', this)">🎭 Les deux oraux</button>
+  <button class="nav-tab" onclick="showTab('bilan', this)">📖 Mon bilan</button>
+  <button class="nav-tab" onclick="showTab('flipcards', this)">📚 Révisions</button>
+</nav>
+
+<!-- Barre de navigation en bas — mobile only -->
+<nav id="bottom-nav">
+  <button class="bnav-btn active" onclick="showTab('planning', this)" id="bnav-planning">
+    <span class="bnav-icon">📅</span>
+    <span class="bnav-label">Planning</span>
+  </button>
+  <button class="bnav-btn" onclick="showTab('oraux', this)" id="bnav-oraux">
+    <span class="bnav-icon">🎭</span>
+    <span class="bnav-label">Oraux</span>
+  </button>
+  <button class="bnav-btn" onclick="showTab('bilan', this)" id="bnav-bilan">
+    <span class="bnav-icon">📖</span>
+    <span class="bnav-label">Bilan</span>
+  </button>
+  <button class="bnav-btn" onclick="showTab('flipcards', this)" id="bnav-flipcards">
+    <span class="bnav-icon">📚</span>
+    <span class="bnav-label">Révisions</span>
+  </button>
+  <button class="bnav-btn" onclick="openSaveModal()" id="bnav-save">
+    <span class="bnav-icon">💾</span>
+    <span class="bnav-label">Sauver</span>
+  </button>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  TAB 1 — PLANNING                         -->
+<!-- ══════════════════════════════════════════ -->
+<section class="tab-section active" id="tab-planning">
+
+  <div class="section-heading">Ton programme, semaine par semaine</div>
+  <div class="section-sub">Du 1er mai au 16 juin 2026 · Coche les tâches au fur et à mesure</div>
+
+  <div class="info-box" style="font-size:0.83rem;display:flex;align-items:flex-start;gap:0.6rem;">
+    <span style="font-size:1.1rem;flex-shrink:0;">💾</span>
+    <span><strong style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage);display:block;margin-bottom:0.25rem;">Sauvegarde locale</strong>
+    Tes coches et tes notes sont <strong>mémorisées dans ce navigateur, sur cet appareil uniquement</strong>. Elles persistent si tu fermes et réouvres l'onglet — mais elles ne se transfèrent pas si tu changes d'appareil ou de navigateur. Pour ne pas perdre ton travail, utilise <strong>toujours le même navigateur sur le même appareil.</strong></span>
+  </div>
+
+  <div class="alert-box">
+    <strong>⚠ Deadline portfolio</strong>
+    La clé USB avec tes <strong>deux portfolios</strong> doit être remise <strong>avant le jeudi 15 mai 2026.</strong><br><br>
+        ✏️ <strong>Nom de la clé USB</strong> — renomme-la avec ton <strong>Nom_Prénom</strong> (sur l'ordinateur, clique droit → Renommer).<br>
+        🏷️ <strong>Étiquette physique</strong> — colle un petit scotch sur la clé avec ton <strong>Nom / Prénom</strong> écrit lisiblement.<br>
+        📂 <strong>Noms des fichiers</strong> — les deux portfolios doivent être nommés ainsi :<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;→ <code>NOM_Prenom_FemmesFeministeFeminite</code><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;→ <code>NOM_Prenom_Paris</code> ou <code>NOM_Prenom_ViolletLeDuc</code><br>
+        La clé ne doit contenir <strong>aucun autre fichier.</strong>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--rust)"></div> Portfolio</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--sage)"></div> Oral spé HIDA</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--slate)"></div> Écrit spé</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--ochre)"></div> Grand Oral</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--light-dust)"></div> 2e spécialité</div>
+  </div>
+
+  <!-- SEMAINE 1 -->
+  <div class="week-block open" id="week1">
+    <div class="week-header" onclick="toggleWeek('week1')">
+      <div>
+        <div class="week-label">Semaine 1 · 1–4 mai 2026</div>
+        <div class="week-title">Finaliser les portfolios</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-body">
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 8</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Vérifier que le fichier HTML de ton portfolio est complet et bien rempli (toutes les cases, cartels, problématique, sources)</span><span class="task-tag tag-portfolio">Portfolio</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Titrer tes deux portfolios avec un titre bref (pas la problématique entière — le titre la suggère sans la formuler)</span><span class="task-tag tag-portfolio">Portfolio</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Vérifier la normalisation des cartels : artiste, titre, date, technique, dimensions, lieu de conservation</span><span class="task-tag tag-portfolio">Portfolio</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Vérifier que les images sont lisibles et les fichiers ouvrent correctement sur un logiciel courant</span><span class="task-tag tag-portfolio">Portfolio</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Mettre les deux portfolios sur la clé USB — nommer la clé <em>NOM_Prénom</em>, coller un scotch avec ton nom à l'extérieur, nommer les fichiers <em>NOM_Prenom_Paris</em>, <em>NOM_Prenom_ViolletLeDuc</em> ou <em>NOM_Prenom_FemmesFeministeFeminite</em> — rien d'autre sur la clé</span><span class="task-tag tag-urgent">Urgent</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Tirer en version papier les deux portfolios (en cas de bug de lecture le jour J)</span><span class="task-tag tag-portfolio">Portfolio</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Commencer à énoncer oralement ta problématique sans lire — 2 minutes max, à voix haute</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-basse" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Plage de révision 2e spécialité (à définir selon ton autre matière)</span><span class="task-tag tag-revision">Révision</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SEMAINE 2 -->
+  <div class="week-block" id="week2">
+    <div class="week-header" onclick="toggleWeek('week2')">
+      <div>
+        <div class="week-label">Semaine 2 · 5–11 mai 2026</div>
+        <div class="week-title">Remise de la clé USB + premier entraînement oral</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-body">
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 8</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="alert-box" style="margin-bottom:0.8rem">
+        <strong>📌 Jeudi 15 mai au plus tard</strong>
+        Remise de la clé USB à ton professeur, visée et tamponnée. Ne pas oublier le dossier imprimé (cartels + document de synthèse).
+      </div>
+      <ul class="task-list">
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">🔑 Remettre la clé USB avant le 15 mai — confirme avec ton prof que c'est bien reçu</span><span class="task-tag tag-urgent">Urgent</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">S'entraîner à présenter les 2 portfolios : 15 min par portfolio, sans notes, en incluant la problématique et le fil conducteur des œuvres</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Mémoriser pour chaque œuvre : artiste, date, contexte, ce qui la relie à la problématique</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer une liste de 5 à 8 questions que le jury pourrait poser sur chaque portfolio</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Relire son bilan de deux ans de formation et l'enrichir (voir onglet "Bilan personnel")</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Travailler le vocabulaire spécifique : termes d'analyse d'œuvre, notions du programme</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Grand Oral : finaliser ses deux questions problématisées et les faire valider par ses profs</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
+        <li class="task-item priority-basse" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Plage révision 2e spécialité</span><span class="task-tag tag-revision">Révision</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SEMAINE 3 -->
+  <div class="week-block" id="week3">
+    <div class="week-header" onclick="toggleWeek('week3')">
+      <div>
+        <div class="week-label">Semaine 3 · 19–25 mai 2026</div>
+        <div class="week-title">Approfondissement oral + préparation écrit</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-body">
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 9</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Simulation d'oral complète (30 min) avec un camarade ou en famille — présenter le portfolio tiré au sort et répondre aux questions</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Réviser les repères chronologiques des 3 thèmes : Viollet-le-Duc, Paris capitale des arts, Femmes/féminité/féminisme</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">S'entraîner sur des annales de l'écrit HIDA (format : 2 parties sur corpus documentaire, 10 pts chacune)</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Rédiger une fiche synthèse Viollet-le-Duc : dates clés, œuvres majeures, enjeux patrimoniaux</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Rédiger une fiche synthèse Paris capitale des arts 1900-1950 : mouvements, lieux, artistes clés</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Rédiger une fiche synthèse Femmes, féminité, féminisme : œuvres, artistes, enjeux</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Grand Oral : s'entraîner à la présentation de <strong>10 minutes</strong> sur sa question HIDA (nouvelle durée depuis 2024)</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer sa réponse à "Pourquoi ce choix de portfolio / de problématique ?" — réponse personnelle et argumentée</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-basse" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Plages révision 2e spécialité (prévoir minimum 2h cette semaine)</span><span class="task-tag tag-revision">Révision</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SEMAINE 4 -->
+  <div class="week-block" id="week4">
+    <div class="week-header" onclick="toggleWeek('week4')">
+      <div>
+        <div class="week-label">Semaine 4 · 26 mai – 1er juin 2026</div>
+        <div class="week-title">Entraînement intensif à l'oral</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-body">
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 8</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Simulation d'oral complète × 2 cette semaine — varier le portfolio présenté (tu tires au sort le jour J !)</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Travailler la posture : regarder le jury, parler sans notes, gérer le temps (<strong>10 min max</strong> pour la présentation en 2026)</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer des réponses sur ses projets post-bac — le jury peut les évoquer pendant l'échange (10 min), sans phase dédiée séparée</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Réviser les œuvres "hors portfolio" que tu as étudiées en cours (le jury peut poser des questions sur le programme large)</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Grand Oral : simulation de 20 min de préparation + 10 min de présentation + 10 min d'échange avec quelqu'un</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Grand Oral : préparer les réponses sur ton parcours et tes projets d'orientation — le jury peut les aborder pendant les 10 min d'échange (plus de phase séparée depuis 2024)</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Faire les flipcards de révision (onglet dédié) sur les 3 thèmes du programme</span><span class="task-tag tag-revision">Révision</span></li>
+        <li class="task-item priority-basse" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Révision 2e spécialité — prévoir des fiches ou des exercices sur les points les plus fragiles</span><span class="task-tag tag-revision">Révision</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SEMAINE 5 -->
+  <div class="week-block" id="week5">
+    <div class="week-header" onclick="toggleWeek('week5')">
+      <div>
+        <div class="week-label">Semaine 5 · 2–8 juin 2026</div>
+        <div class="week-title">Semaine avant l'oral — peaufinage et calme</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-body">
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 8</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="info-box" style="margin-bottom:0.8rem">
+        <strong>💡 Conseil</strong>
+        La semaine de l'oral n'est pas la semaine pour apprendre de nouvelles choses. C'est la semaine pour consolider ce que tu sais et travailler ta sérénité.
+      </div>
+      <ul class="task-list">
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Dernier run d'oral complet (30 min chrono) — enregistre-toi si possible pour t'écouter</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Vérifier que ta copie papier du portfolio est propre et complète (en cas de panne numérique)</span><span class="task-tag tag-portfolio">Portfolio</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer ce que tu apportes le jour J : clé USB (copie), dossier imprimé, document de synthèse de classe</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Relire ses 3 fiches de synthèse (Viollet-le-Duc / Paris / Femmes) — pas pour mémoriser, pour rafraîchir</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Connaître le déroulement exact du Grand Oral : 20 min de préparation + 10 min de présentation + 10 min d'échange (sans phase «&nbsp;projet&nbsp;» séparée depuis 2024)</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer une belle introduction : accrocher le jury dès les premières secondes</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-basse" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Révision légère 2e spécialité — ne pas s'épuiser avant l'oral</span><span class="task-tag tag-revision">Révision</span></li>
+        <li class="task-item priority-basse" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Dormir suffisamment les 3 nuits avant l'épreuve 🌙</span><span class="task-tag tag-revision">Bien-être</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SEMAINE 6 -->
+  <div class="week-block" id="week6">
+    <div class="week-header" onclick="toggleWeek('week6')">
+      <div>
+        <div class="week-label">Semaine 6 · 9–15 juin 2026</div>
+        <div class="week-title">Oral HIDA (9 ou 10 juin) puis préparation écrit</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-body">
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 6</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">🎤 ORAL HIDA — 9 ou 10 juin (selon ta convocation). Tu as assuré !</span><span class="task-tag tag-urgent">J-DAY</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Après l'oral : noter les questions posées par le jury (utile pour l'écrit et le Grand Oral)</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Révision intensive pour l'écrit du 16 juin : revoir les 3 thèmes en profondeur, analyser un corpus d'images</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">S'entraîner au format écrit : répondre à une question courte (mini-essai 10 pts) + commentaire de corpus (10 pts)</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Révision 2e spécialité si tes épreuves sont encore à venir</span><span class="task-tag tag-revision">Révision</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">✍️ ÉCRIT HIDA — 16 juin. 3h30. Corpus documentaire. Courage !</span><span class="task-tag tag-urgent">J-DAY</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- APRÈS -->
+  <div class="week-block" id="week7">
+    <div class="week-header" onclick="toggleWeek('week7')">
+      <div>
+        <div class="week-label">Après le 16 juin · Jusqu'au Grand Oral</div>
+        <div class="week-title">Grand Oral — dernière ligne droite</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-body">
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 6</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Grand Oral : maîtriser parfaitement ses 2 questions (dont une en HIDA) — tenir <strong>10 min</strong> de présentation sans notes (nouvelle durée 2026)</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">S'entraîner à l'entretien (10 min) : répondre à des questions déstabilisantes avec calme et argumentation</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Grand Oral : préparer son parcours et ses projets d'orientation — ils peuvent être abordés pendant l'échange de 10 min (plus de phase «&nbsp;projet&nbsp;» de 5 min depuis la session 2024)</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Simulation complète Grand Oral (20 min de prép + 10 min présentation + 10 min échange)</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer son support de présentation (feuille A4 ou notes pendant les 20 min de préparation)</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
+        <li class="task-item priority-basse" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">🎤 GRAND ORAL — fin juin. Sois toi-même, argumenté·e et curieux·se !</span><span class="task-tag tag-urgent">J-DAY</span></li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  TAB 2 — LES DEUX ORAUX                   -->
+<!-- ══════════════════════════════════════════ -->
+<section class="tab-section" id="tab-oraux">
+
+  <div class="section-heading">Comprendre les deux oraux</div>
+  <div class="section-sub">Ne pas les confondre — deux épreuves très différentes</div>
+
+  <div class="info-box">
+    <strong>ℹ️ Point clé</strong>
+    Tu passes <strong>deux oraux différents</strong> en juin. L'oral de spécialité HIDA (9 ou 10 juin) évalue ton travail de l'année avec tes portfolios. Le Grand Oral (fin juin) évalue ta capacité à construire et défendre une argumentation personnelle sur une question problématisée.
+  </div>
+
+  <div class="compare-table-wrap">
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Oral de spécialité HIDA</th>
+        <th>Grand Oral</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Date</td>
+        <td class="oral-spe">9 ou 10 juin 2026 (selon convocation)</td>
+        <td class="grand-oral">Fin juin 2026 (date à confirmer)</td>
+      </tr>
+      <tr>
+        <td>Durée totale</td>
+        <td class="oral-spe"><strong>30 minutes</strong> — sans temps de préparation préalable</td>
+        <td class="grand-oral"><strong>40 minutes</strong> au total : 20 min de préparation + 20 min devant le jury (10 min exposé + 10 min échange)</td>
+      </tr>
+      <tr>
+        <td>Coefficient</td>
+        <td class="oral-spe">Moitié de la note de spécialité (coeff. 8 sur 16)</td>
+        <td class="grand-oral">Coefficient <strong>10</strong> en voie générale (14 en voie technologique)</td>
+      </tr>
+      <tr>
+        <td>Ce que l'on évalue</td>
+        <td class="oral-spe">Le travail de l'année : tes deux portfolios, ta culture artistique, ta capacité à analyser des œuvres</td>
+        <td class="grand-oral">Ta capacité à construire et défendre une argumentation personnelle sur une question que tu as choisie</td>
+      </tr>
+      <tr>
+        <td>Déroulement</td>
+        <td class="oral-spe"><strong>Tirage au sort</strong> d'un des 2 portfolios → <strong>15 min</strong> de présentation → <strong>15 min</strong> d'entretien (le jury peut aussi interroger sur le 2e portfolio)</td>
+        <td class="grand-oral">
+          <strong>20 min</strong> de préparation seul → <strong>10 min</strong> de présentation sans notes → <strong>10 min</strong> d'échange avec le jury<br>
+          <span style="display:inline-block;margin-top:0.5rem;padding:0.3rem 0.6rem;background:rgba(201,146,26,0.15);border:1px solid rgba(201,146,26,0.4);border-radius:3px;font-size:0.8em;color:var(--ochre);">
+            ⚠️ Nouveauté 2024 (reconduite en 2026) : la phase «&nbsp;projet d'orientation&nbsp;» de 5 min a été supprimée. L'échange de 10 min avec le jury intègre désormais les questions sur le parcours et l'orientation. <em>Source : eduscol.education.fr</em>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>Notes autorisées</td>
+        <td class="oral-spe">Aucune note — présentation libre, appuyée sur les images du portfolio affichées à l'écran</td>
+        <td class="grand-oral">Notes autorisées pendant les 20 min de préparation uniquement — interdites face au jury</td>
+      </tr>
+      <tr>
+        <td>Composition du jury</td>
+        <td class="oral-spe">Enseignants d'Histoire des Arts d'un autre établissement — jamais ceux de la classe</td>
+        <td class="grand-oral">2 examinateurs extérieurs (dont 1 issu de la spécialité) — jamais ceux de la classe</td>
+      </tr>
+      <tr>
+        <td>Projet d'orientation</td>
+        <td class="oral-spe">Le jury peut aborder les projets post-bac, sans que ce soit un moment dédié</td>
+        <td class="grand-oral">Intégré à l'échange de 10 min — le jury peut questionner le candidat sur son orientation ; ce n'est plus une phase dédiée et séparée (modification entrée en vigueur à la session 2024)</td>
+      </tr>
+    </tbody>
+  </table>
+  </div><!-- /compare-table-wrap -->
+
+  <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; font-style:italic; margin-bottom:1.5rem;">Checklist oral de spécialité HIDA</h3>
+
+  <div class="bilan-card">
+    <div class="bilan-card-header">Avant l'oral — à cocher</div>
+    <div class="bilan-card-body">
+      <ul class="check-list">
+        <li><input type="checkbox"><span>Je connais ma problématique pour chaque portfolio et je peux l'expliquer en une phrase</span></li>
+        <li><input type="checkbox"><span>Je peux justifier le choix et l'ordonnancement de chaque œuvre dans mon portfolio</span></li>
+        <li><input type="checkbox"><span>Je maîtrise les cartels (artiste, titre, date, technique, lieu) pour chaque œuvre</span></li>
+        <li><input type="checkbox"><span>Je peux parler des liens entre les œuvres (convergences, contrastes, évolution)</span></li>
+        <li><input type="checkbox"><span>J'ai préparé ma réponse sur mon bilan de 2 ans de formation (spectacles, voyages, pratiques)</span></li>
+        <li><input type="checkbox"><span>Je peux répondre à des questions sur mes projets post-bac de façon personnelle et motivée</span></li>
+        <li><input type="checkbox"><span>J'ai répété à voix haute — pas dans ma tête — au moins 3 fois chaque portfolio</span></li>
+        <li><input type="checkbox"><span>Je connais le déroulement exact (tirage au sort, 15 min présentation, 15 min entretien)</span></li>
+        <li><input type="checkbox"><span>J'ai ma clé USB (copie), mon dossier imprimé et le document de synthèse prêts</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; font-style:italic; margin:1.5rem 0 1rem;">Checklist Grand Oral</h3>
+
+  <div class="bilan-card">
+    <div class="bilan-card-header">Critères évalués par le jury — à cocher quand maîtrisé</div>
+    <div class="bilan-card-body">
+      <ul class="check-list">
+        <li><input type="checkbox"><span><strong>Expression orale</strong> : voix claire, débit maîtrisé, vocabulaire précis et soutenu (pas de "euh", de "voilà", de langage familier)</span></li>
+        <li><input type="checkbox"><span><strong>Prise de parole en continu</strong> : discours construit, fil conducteur clair, transitions logiques, pas de mémorisation mécanique</span></li>
+        <li><input type="checkbox"><span><strong>Connaissances</strong> : maîtrise précise du sujet, capacité à mobiliser des savoirs en lien avec mes spécialités</span></li>
+        <li><input type="checkbox"><span><strong>Interaction avec le jury</strong> : écoute, réponses argumentées, capacité à approfondir ou à reformuler</span></li>
+        <li><input type="checkbox"><span><strong>Argumentation</strong> : structure claire (thèse, arguments, exemples), raisonnement personnel et raisonné</span></li>
+        <li><input type="checkbox"><span><strong>Orientation dans l'échange</strong> : je suis prêt·e à répondre aux questions du jury sur mon parcours et mes projets pendant les 10 min d'échange (la phase «&nbsp;projet&nbsp;» séparée de 5 min a été supprimée depuis la session 2024)</span></li>
+        <li><input type="checkbox"><span>Mes 2 questions sont <strong>problématisées</strong> (pas des titres de cours, mais de vraies questions ouvertes)</span></li>
+        <li><input type="checkbox"><span>Mes questions sont <strong>validées par les enseignants</strong> de spécialité</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; font-style:italic; margin-bottom:1rem;">Mes deux questions de Grand Oral</h3>
+
+  <div class="bilan-card">
+    <div class="bilan-card-body">
+      <div class="bilan-field">
+        <label>Question 1 — liée à Histoire des Arts</label>
+        <textarea placeholder="Ex : En quoi la représentation du corps féminin dans l'art du XXe siècle reflète-t-elle les mutations sociales et politiques de la condition des femmes ?"></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Question 2 — liée à ma 2e spécialité ou transversale</label>
+        <textarea placeholder="Ex : ..."></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Mes 2 spécialités Terminale</label>
+        <input type="text" placeholder="Ex : Histoire des Arts + ...">
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ── SECTION PROBLÉMATIQUE ── -->
+  <div style="margin-bottom:0.25rem;">
+    <div class="section-heading" style="font-size:1.6rem;">🎯 Ma problématique en une phrase</div>
+    <div class="section-sub">L'exercice le plus important — et le plus difficile</div>
+  </div>
+
+  <div class="info-box">
+    <strong>💡 Pourquoi cet exercice ?</strong>
+    Le jury t'arrêtera si tu lis ta problématique. Tu dois la <strong>dire</strong>, pas la réciter. Une bonne problématique tient en une phrase claire, qui pose une vraie tension ou question — pas juste un thème. Entraîne-toi à la prononcer à voix haute, seul·e, jusqu'à ce qu'elle soit naturelle.
+  </div>
+
+  <div class="bilan-card">
+    <div class="bilan-card-header">Portfolio 1 — ta problématique</div>
+    <div class="bilan-card-body">
+      <div class="bilan-field">
+        <label>Thème de ce portfolio</label>
+        <input type="text" placeholder="Ex : Femmes, féminité, féminisme / Paris capitale des arts / Viollet-le-Duc">
+      </div>
+      <div class="bilan-field">
+        <label>Ta problématique — écris-la en une seule phrase</label>
+        <textarea style="min-height:90px;" placeholder="Ex : En quoi les autoportraits de Frida Kahlo subvertissent-ils les codes du regard masculin pour affirmer une identité féminine souveraine ?"></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Dis-la autrement — reformule-la en langage oral, plus naturel</label>
+        <textarea style="min-height:70px;" placeholder="La version que tu diras vraiment au jury, sans lire, avec tes propres mots..."></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Le mot ou l'idée centrale que tu ne dois JAMAIS oublier de mentionner</label>
+        <input type="text" placeholder="Ex : subversion du regard / rapport au corps / héritage vs rupture...">
+      </div>
+    </div>
+  </div>
+
+  <div class="bilan-card">
+    <div class="bilan-card-header">Portfolio 2 — ta problématique</div>
+    <div class="bilan-card-body">
+      <div class="bilan-field">
+        <label>Thème de ce portfolio</label>
+        <input type="text" placeholder="Ex : Femmes, féminité, féminisme / Paris capitale des arts / Viollet-le-Duc">
+      </div>
+      <div class="bilan-field">
+        <label>Ta problématique — écris-la en une seule phrase</label>
+        <textarea style="min-height:90px;" placeholder="Ex : Comment Viollet-le-Duc réinvente-t-il le Moyen Âge pour forger une identité nationale française au XIXe siècle ?"></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Dis-la autrement — reformule-la en langage oral, plus naturel</label>
+        <textarea style="min-height:70px;" placeholder="La version que tu diras vraiment au jury, sans lire, avec tes propres mots..."></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Le mot ou l'idée centrale que tu ne dois JAMAIS oublier de mentionner</label>
+        <input type="text" placeholder="Ex : identité nationale / authenticité / restauration comme fiction...">
+      </div>
+    </div>
+  </div>
+
+  <div style="background:rgba(201,146,26,0.07);border:1px solid rgba(201,146,26,0.3);border-left:4px solid var(--ochre);border-radius:6px;padding:0.9rem 1rem;font-size:0.85rem;line-height:1.6;">
+    <strong style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ochre);display:block;margin-bottom:0.4rem;">🔁 Test à faire maintenant</strong>
+    Ferme ce document. Dis ta problématique à voix haute sans regarder. Tu hésites ? Tu reformules ? C'est normal — note la version que tu as dite naturellement : c'est probablement la meilleure.
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  TAB 3 — BILAN PERSONNEL                  -->
+<!-- ══════════════════════════════════════════ -->
+<section class="tab-section" id="tab-bilan">
+
+  <div class="section-heading">Mon bilan de deux ans</div>
+  <div class="section-sub">Ce bilan est communiqué aux jurys · Remplis-le soigneusement</div>
+
+  <div class="info-box">
+    <strong>ℹ️ Pourquoi ce bilan ?</strong>
+    Le jury de l'oral de spé peut te poser des questions sur ton parcours de deux ans. Il peut s'intéresser aux spectacles que tu as vus, aux voyages scolaires, à tes pratiques artistiques personnelles. C'est aussi une chance de montrer qui tu es au-delà du cours.
+  </div>
+
+  <div class="bilan-card">
+    <div class="bilan-card-header">Mes deux thèmes de portfolio — récapitulatif</div>
+    <div class="bilan-card-body">
+      <div class="bilan-field">
+        <label>Portfolio 1 — Thème et problématique</label>
+        <input type="text" placeholder="Ex : Femmes, féminité, féminisme — Ma problématique : ...">
+      </div>
+      <div class="bilan-field">
+        <label>Portfolio 2 — Thème et problématique</label>
+        <input type="text" placeholder="Ex : Viollet-le-Duc ou Paris capitale des arts — Ma problématique : ...">
+      </div>
+      <div class="bilan-field">
+        <label>Œuvre qui m'a le plus marqué·e dans chaque portfolio et pourquoi</label>
+        <textarea placeholder="Raconte ce qui t'a touché·e, surpris·e, ou fait réfléchir..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="bilan-card">
+    <div class="bilan-card-header">Spectacles, expositions, cinéma vus en 2 ans</div>
+    <div class="bilan-card-body">
+      <div class="bilan-field">
+        <label>Spectacles vus (théâtre, danse, opéra, concert...)</label>
+        <textarea placeholder="Titre, compagnie, date approximative, lieu — ce que ça t'a apporté"></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Expositions ou musées visités</label>
+        <textarea placeholder="Exposition, musée, œuvre marquante — pourquoi ?"></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Films ou œuvres audiovisuelles marquants (en lien avec HIDA ou non)</label>
+        <textarea placeholder="Film, série, documentaire... ce qui t'a nourri artistiquement"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="bilan-card">
+    <div class="bilan-card-header">Voyages scolaires ou personnels</div>
+    <div class="bilan-card-body">
+      <div class="bilan-field">
+        <label>Sorties et voyages scolaires (lieux, ce que tu y as découvert)</label>
+        <textarea placeholder="Ex : Visite du musée X, voyage à Y — ce que tu en as retenu en lien avec l'histoire des arts"></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Voyages personnels ou expériences culturelles hors école</label>
+        <textarea placeholder="Un lieu visité, un patrimoine découvert, une rencontre culturelle..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="bilan-card">
+    <div class="bilan-card-header">Pratiques artistiques personnelles</div>
+    <div class="bilan-card-body">
+      <div class="bilan-field">
+        <label>Tes pratiques artistiques personnelles (musique, dessin, photo, écriture, danse, théâtre...)</label>
+        <textarea placeholder="Ce que tu fais, depuis quand, ce que ça t'apporte"></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Œuvres personnelles que tu pourrais mentionner à l'oral</label>
+        <textarea placeholder="Un projet, une création, quelque chose de toi que tu pourrais montrer ou évoquer"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="bilan-card">
+    <div class="bilan-card-header">Mes projets d'orientation post-bac</div>
+    <div class="bilan-card-body">
+      <div class="bilan-field">
+        <label>Mes voies envisagées après le bac (formations, écoles, universités)</label>
+        <textarea placeholder="Ce que tu envisages et pourquoi — sois précis·e et personnel·le"></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Le lien entre mon parcours HIDA et mes projets</label>
+        <textarea placeholder="En quoi tes deux ans de spé HIDA ont nourri / influencé / confirmé tes projets ?"></textarea>
+      </div>
+      <div class="bilan-field">
+        <label>Ce que je retiens de ces deux années de formation en Histoire des Arts</label>
+        <textarea placeholder="Ce qui t'a vraiment changé·e ou apporté quelque chose..."></textarea>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  TAB 4 — FLIPCARDS                        -->
+<!-- ══════════════════════════════════════════ -->
+<section class="tab-section" id="tab-flipcards">
+
+  <div class="section-heading">Révisions</div>
+  <div class="section-sub">Ressources, annales et flipcards pour consolider tes connaissances</div>
+
+  <!-- RESSOURCES -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:2rem;">
+
+    <!-- Cours Genially -->
+    <a href="https://view.genially.com/6678486880767d0014eb6dd4" target="_blank" rel="noopener"
+       style="display:flex;flex-direction:column;gap:0.5rem;padding:1.2rem;background:var(--cream);border:1px solid var(--light-dust);border-left:4px solid var(--ochre);border-radius:4px;text-decoration:none;color:inherit;box-shadow:2px 3px 12px rgba(26,21,16,0.06);transition:box-shadow 0.2s;"
+       onmouseover="this.style.boxShadow='2px 5px 18px rgba(26,21,16,0.12)'" onmouseout="this.style.boxShadow='2px 3px 12px rgba(26,21,16,0.06)'">
+      <span style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ochre);">📖 Cours en ligne</span>
+      <span style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;font-style:italic;line-height:1.3;">Le cours de M. Cador sur <em style="color:var(--rust);">Femmes, Féminité, Féminisme</em></span>
+      <span style="font-size:0.82rem;color:var(--dust);">Accéder au cours interactif Genially ↗</span>
+    </a>
+
+    <!-- Site HIDA Herriot -->
+    <a href="https://hidaherriot2023.wixsite.com/hida-herriot-2023-24" target="_blank" rel="noopener"
+       style="display:flex;flex-direction:column;gap:0.5rem;padding:1.2rem;background:var(--cream);border:1px solid var(--light-dust);border-left:4px solid var(--slate);border-radius:4px;text-decoration:none;color:inherit;box-shadow:2px 3px 12px rgba(26,21,16,0.06);transition:box-shadow 0.2s;"
+       onmouseover="this.style.boxShadow='2px 5px 18px rgba(26,21,16,0.12)'" onmouseout="this.style.boxShadow='2px 3px 12px rgba(26,21,16,0.06)'">
+      <span style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--slate);">🏫 Site du lycée</span>
+      <span style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;line-height:1.3;">Site Histoire des Arts — Lycée Herriot de Voiron</span>
+      <span style="font-size:0.82rem;color:var(--dust);">Ressources et projets HIDA du lycée ↗</span>
+    </a>
+
+    <!-- Annales -->
+    <div style="padding:1.2rem;background:var(--cream);border:1px solid var(--light-dust);border-left:4px solid var(--sage);border-radius:4px;box-shadow:2px 3px 12px rgba(26,21,16,0.06);">
+      <div style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--sage);margin-bottom:0.5rem;">📄 Sujets du bac — lisibles sur mobile</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:0.75rem;">Annales spécialité Histoire des arts</div>
+      <div style="display:flex;flex-direction:column;gap:0.4rem;">
+        <a href="https://eduscol.education.gouv.fr/5199/annales-des-epreuves-du-baccalaureat-des-voies-generale-et-technologique" target="_blank" rel="noopener"
+           style="display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.7rem;background:rgba(74,103,65,0.08);border:1px solid rgba(74,103,65,0.25);border-radius:3px;text-decoration:none;color:var(--ink);font-size:0.88rem;transition:background 0.15s;"
+           onmouseover="this.style.background='rgba(74,103,65,0.16)'" onmouseout="this.style.background='rgba(74,103,65,0.08)'">
+          <span style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--sage);min-width:48px;">2021–2025</span>
+          <span>Sujets sessions 2021–2025 — éduscol ↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider" style="margin-bottom:2rem;">
+
+  <div class="section-heading" style="font-size:1.3rem;margin-bottom:0.25rem;">🃏 Flipcards de révision</div>
+  <div class="section-sub">Clique sur une carte pour voir la réponse · Teste tes connaissances</div>
+
+  <div class="score-bar">
+    <span>Cartes retournées :</span>
+    <span class="score-val" id="score-count">0</span>
+    <span class="score-total" id="score-total">/ 36</span>
+    &nbsp;—&nbsp;
+    <span style="color:var(--dust)">Filtre :</span>
+  </div>
+
+  <div class="flipcard-filter">
+    <button class="filter-btn active" onclick="filterCards('all', this)">Tous les thèmes</button>
+    <button class="filter-btn" onclick="filterCards('viollet', this)">Viollet-le-Duc</button>
+    <button class="filter-btn" onclick="filterCards('paris', this)">Paris capitale des arts</button>
+    <button class="filter-btn" onclick="filterCards('femmes', this)">Femmes, féminité, féminisme</button>
+    <button class="filter-btn" onclick="filterCards('oral', this)">Méthode orale</button>
+    <button class="filter-btn" onclick="filterCards('ecrit', this)">Méthode écrit</button>
+    <button class="filter-btn" onclick="filterCards('vocab', this)">🔤 Vocabulaire</button>
+  </div>
+
+  <div class="cards-grid" id="cards-grid">
+
+    <!-- VIOLLET-LE-DUC -->
+    <div class="flipcard" data-theme="viollet" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Viollet-le-Duc</div>
+          <div class="card-question">Quelles sont les dates de vie de Viollet-le-Duc et ses deux rôles majeurs ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">1814–1879. Restaurateur de monuments médiévaux (Carcassonne, Notre-Dame de Paris, Pierrefonds...) et théoricien de l'architecture. Considéré comme précurseur de l'architecture moderne.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="viollet" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Viollet-le-Duc</div>
+          <div class="card-question">Qu'est-ce qui a remis Viollet-le-Duc au cœur de l'actualité en 2019 ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">L'incendie de Notre-Dame de Paris (15 avril 2019) et le débat sur la restauration de la flèche (fidèle à Viollet-le-Duc ? contemporaine ?). Rouvre la question de l'authenticité en restauration.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="viollet" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Viollet-le-Duc</div>
+          <div class="card-question">Quels sont les grands enjeux patrimoniaux posés par son œuvre ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Authenticité et pérennité du patrimoine. Faut-il restaurer à l'identique, compléter de façon contemporaine, ou conserver en l'état ? Viollet-le-Duc : "restaurer un édifice, ce n'est pas l'entretenir, c'est le rétablir dans un état complet."</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARIS -->
+    <div class="flipcard" data-theme="paris" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Paris capitale des arts</div>
+          <div class="card-question">Quelle période couvre ce thème et quels grands mouvements artistiques y naissent ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Première moitié du XXe siècle (env. 1900–1950). Fauvisme, Cubisme, Dada, Surréalisme, École de Paris. Paris attire artistes du monde entier (Picasso, Modigliani, Chagall...). Galeries, cafés, ateliers : un écosystème créatif unique.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="paris" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Paris capitale des arts</div>
+          <div class="card-question">Qu'est-ce que "l'École de Paris" et pourquoi cette expression est-elle complexe ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Terme qui désigne des artistes étrangers vivant à Montparnasse dans l'entre-deux-guerres (Modigliani, Soutine, Kisling, Chagall...). Pas un style commun mais une communauté de vie. Expression contestée car elle gomme les nationalités et les styles très divers.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="paris" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Paris capitale des arts</div>
+          <div class="card-question">Citez 3 lieux symboliques de Paris capitale des arts dans la 1re moitié du XXe siècle</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Le Bateau-Lavoir à Montmartre (Picasso, Braque), les ateliers de Montparnasse (La Ruche), les galeries Kahnweiler et Rosenberg. Aussi : le Café de la Rotonde, la Closerie des Lilas, les Expositions universelles (1900, 1937).</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEMMES -->
+    <div class="flipcard" data-theme="femmes" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Femmes, féminité, féminisme</div>
+          <div class="card-question">Quelle est la distinction essentielle que pose ce thème sur la figure féminine dans l'art ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">La femme comme sujet (muse, modèle, allégorie, objet du regard masculin) vs la femme comme créatrice (longtemps invisible, pourtant attestée depuis l'Antiquité). Cette hyper-présence comme sujet masque la relative invisibilité des femmes artistes.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="femmes" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Femmes, féminité, féminisme</div>
+          <div class="card-question">Que signifie le concept du "male gaze" et quel artiste le questionne ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Le "regard masculin" (théorisé par Laura Mulvey, 1975) : la femme construite comme objet du désir pour un spectateur supposé masculin. Des artistes comme Cindy Sherman, Barbara Kruger ou Sylvia Sleigh ont retourné ce regard par l'auto-mise en scène et la critique visuelle.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="femmes" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Femmes, féminité, féminisme</div>
+          <div class="card-question">Citez 2 artistes femmes majeures du programme et une œuvre clé de chacune</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Frida Kahlo — "Les deux Fridas" (1939), autoportrait double questionnant l'identité et le corps. Artemisia Gentileschi — "Judith décapitant Holopherne" (1614-20), subversion du regard masculin par une violence assumée du geste féminin.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTHODE ORAL -->
+    <div class="flipcard" data-theme="oral" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode oral spé HIDA</div>
+          <div class="card-question">Comment structurer ses 15 minutes de présentation du portfolio ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">1. Formuler la problématique oralement (≠ la lire) — 1 min. 2. Présenter les œuvres dans l'ordre choisi en justifiant les liens et l'ordonnancement — 10 min. 3. Conclure sur ce que l'ensemble dit de la problématique — 2 min. Laisser 2 min de marge.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="oral" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode oral spé HIDA</div>
+          <div class="card-question">Que peut demander le jury pendant les 15 minutes d'entretien ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Des questions sur l'autre portfolio, sur des œuvres vues en cours, sur le bilan de 2 ans, sur les choix d'orientation. Aussi : "Pourquoi ce choix d'œuvre ?", "Quelle autre œuvre auriez-vous pu choisir ?", "Comment cette œuvre répond-elle à votre problématique ?"</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="oral" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode oral spé HIDA</div>
+          <div class="card-question">Quelle est la règle d'or sur l'utilisation des notes pendant l'oral spé ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">SANS notes. Le texte officiel précise que "le candidat parle sans notes". Tu peux te tourner vers l'écran pour regarder les images de ton portfolio et t'appuyer dessus, mais tu ne lis pas de fiche. C'est pour ça qu'il faut avoir vraiment mémorisé et intégré, pas récité.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTHODE ÉCRIT -->
+    <div class="flipcard" data-theme="ecrit" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode écrit HIDA</div>
+          <div class="card-question">Comment est structurée l'épreuve écrite de spé HIDA (3h30) ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">2 parties sur corpus documentaire (textes, images, extraits vidéo...) — 10 pts chacune. Partie 1 : répondre sous forme d'essai court à une question, à partir du corpus (liée aux questions hors prog limitatif). Partie 2 : commentaire sur doc lié aux questions limitatives.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="ecrit" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode écrit HIDA</div>
+          <div class="card-question">Quels sont les 5 critères d'évaluation de l'écrit selon les textes officiels ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">1. Maîtriser des repères culturels, géographiques et chronologiques. 2. Utiliser un vocabulaire technique formel. 3. Produire un discours écrit raisonné sur des œuvres. 4. Formuler un jugement esthétique et critique argumenté. 5. Réunir et croiser des sources diverses en les hiérarchisant.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="ecrit" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode écrit HIDA</div>
+          <div class="card-question">Que signifie "contextualiser le sujet" dans un essai d'histoire des arts ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Situer l'œuvre ou le problème dans son époque : contexte historique, artistique, social, politique. Mais aussi montrer en quoi le contexte éclaire l'œuvre — pas juste le réciter. Ex : expliquer pourquoi une œuvre féministe des années 1970 ne peut se comprendre sans la 2e vague féministe.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="femmes" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Femmes, féminité, féminisme</div>
+          <div class="card-question">Qu'est-ce que les Guerrilla Girls et quel est leur apport dans l'histoire de l'art ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Collectif féministe anonyme apparu en 1985 à New York, portant des masques de gorilles. Dénoncent le sous-représentation des femmes dans les musées. Leur affiche "Do women have to be naked to get into the Met Museum?" (1989) est devenue une œuvre emblématique de l'art militant.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="viollet" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Viollet-le-Duc</div>
+          <div class="card-question">Quel château a été restauré par Viollet-le-Duc dans la région grenobloise ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">En Isère : le château de Pupetières à Chabons, restauré par Viollet-le-Duc — exemple local à connaître pour l'académie de Grenoble. Ses chantiers majeurs : Carcassonne, Notre-Dame de Paris, Pierrefonds, château de Roquetaillade (Gironde). Il intervient aussi sur des cathédrales (Amiens, Clermont-Ferrand).</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="paris" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Paris capitale des arts</div>
+          <div class="card-question">Qu'est-ce que le Cubisme et quels en sont les deux co-fondateurs ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Mouvement pictural (1907-vers 1914) qui fragmente les formes pour les montrer sous plusieurs angles simultanément, déconstruit la perspective classique. Co-fondateurs : Pablo Picasso ("Les Demoiselles d'Avignon", 1907) et Georges Braque. Deux phases : cubisme analytique (monochrome) puis synthétique (collages).</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIOLLET-LE-DUC — nouvelles cartes -->
+    <div class="flipcard" data-theme="viollet" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Viollet-le-Duc</div>
+          <div class="card-question">Quelle est la conception de Viollet-le-Duc du style gothique et en quoi est-elle novatrice ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Pour lui, le gothique n'est pas un style décoratif mais un système structurel rationnel : chaque élément (arc-boutant, voûte sur croisée d'ogives) répond à une nécessité constructive. Il y voit une architecture quasi "scientifique", précurseur du modernisme fonctionnaliste (form follows function).</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="viollet" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Viollet-le-Duc</div>
+          <div class="card-question">Quelles sont les critiques adressées à la méthode de restauration de Viollet-le-Duc ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Accusé d'avoir "sur-restauré" : il complète et embellit parfois au-delà de l'état original, inventant des éléments jamais existants (ex : les créatures de Notre-Dame). Son opposant Ruskin (Angleterre) défend la conservation à l'état de ruine. Débat toujours vivant dans la théorie du patrimoine.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="viollet" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Viollet-le-Duc</div>
+          <div class="card-question">Quel est le lien entre Viollet-le-Duc et l'architecture métallique du XIXe siècle ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Dans ses "Entretiens sur l'architecture" (1863-1872), il théorise l'utilisation du métal comme matériau d'avenir, à intégrer honnêtement dans la structure. Influence directe sur des architectes comme Gustave Eiffel et sur l'architecture Art Nouveau (Guimard, entrées du métro parisien).</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARIS — nouvelles cartes -->
+    <div class="flipcard" data-theme="paris" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Paris capitale des arts</div>
+          <div class="card-question">Quel rôle jouent les galeries et marchands d'art dans le rayonnement de Paris au début du XXe s. ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Rôle capital : Daniel-Henry Kahnweiler soutient Picasso, Braque, Léger ; Ambroise Vollard défend Cézanne, Gauguin. Les galeries créent un marché international, légitiment les avant-gardes et financent les artistes. Sans ce réseau, les mouvements n'auraient pas eu la même portée ni la même diffusion.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="paris" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Paris capitale des arts</div>
+          <div class="card-question">Qu'est-ce que le Surréalisme et qui en est le théoricien principal ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Mouvement fondé à Paris en 1924 par André Breton (Manifeste du surréalisme). Explore l'inconscient, le rêve et le hasard pour libérer la création des contraintes rationnelles. Artistes clés : Dalí, Ernst, Magritte, Miró, Man Ray. Influencé par la psychanalyse freudienne.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="paris" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Paris capitale des arts</div>
+          <div class="card-question">Pourquoi New York supplante-t-elle Paris comme capitale mondiale de l'art après 1945 ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Deux guerres mondiales dévastent l'Europe et poussent les artistes à émigrer aux États-Unis (Duchamp, Ernst, Mondrian…). L'Expressionnisme abstrait américain (Pollock, de Kooning, Rothko) s'impose dans les années 1950. Le MoMA de New York devient le nouveau centre du marché et de la légitimation artistique.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEMMES — nouvelles cartes -->
+    <div class="flipcard" data-theme="femmes" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Femmes, féminité, féminisme</div>
+          <div class="card-question">Qu'est-ce que la "Dinner Party" de Judy Chicago (1974-79) et ce qu'elle revendique ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Installation monumentale : une table triangulaire de 39 couverts symbolisant 39 femmes oubliées de l'histoire (de la préhistoire au XXe s.). Chaque assiette est une forme vulvaire unique. Revendique la place des femmes dans l'histoire et réhabilite les arts "mineurs" (céramique, broderie) comme beaux-arts à part entière.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="femmes" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Femmes, féminité, féminisme</div>
+          <div class="card-question">Quelle est la thèse de Linda Nochlin dans "Pourquoi n'y a-t-il pas eu de grands artistes femmes ?" (1971) ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Elle démontre que la question elle-même est biaisée : l'absence de "grandes" artistes femmes ne tient pas à une infériorité naturelle, mais à des obstacles institutionnels (exclusion des académies, impossibilité d'étudier le nu d'après modèle vivant, manque de temps libre). Le problème est structurel, pas biologique.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="femmes" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Femmes, féminité, féminisme</div>
+          <div class="card-question">Quelle place les femmes occupent-elles dans l'art du XIXe siècle en France et quelles en sont les limites ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Quelques artistes émergent (Berthe Morisot, Mary Cassatt, Rosa Bonheur) mais cantonnées à des sujets "féminins" (intérieur, enfants, fleurs). Exclues de l'École des Beaux-Arts jusqu'en 1897. Souvent réduites à peindre des sujets sans nu ni grande composition historique. Leur talent reconnu, leur statut reste mineur.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTHODE ORAL — nouvelles cartes -->
+    <div class="flipcard" data-theme="oral" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode oral spé HIDA</div>
+          <div class="card-question">Comment justifier oralement le choix d'ordonnancement des œuvres dans un portfolio ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Expliquer la logique retenue : chronologique, thématique, dialectique (opposition/dialogue), par médium, par intensité de réponse à la problématique. L'ordre doit être voulu et défendable. Le jury peut demander "pourquoi cette œuvre en premier ?" — avoir une réponse précise et personnelle, pas "parce que c'est la plus connue".</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="oral" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode oral spé HIDA</div>
+          <div class="card-question">Quels éléments constituent un cartel complet pour une œuvre d'art ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Prénom et Nom de l'artiste · Titre de l'œuvre (en italique) · Date de création · Technique et matériaux (huile sur toile, bronze, installation vidéo…) · Dimensions (H × L en cm) · Lieu de conservation actuel (musée, collection, pays). À connaître parfaitement pour chacune des œuvres de tes deux portfolios.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTHODE ÉCRIT — nouvelles cartes -->
+    <div class="flipcard" data-theme="ecrit" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode écrit HIDA</div>
+          <div class="card-question">Quelle est la différence entre une description et une analyse d'œuvre à l'écrit ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">La description dit CE QUE L'ON VOIT (composition, couleurs, formes, lignes, matière…). L'analyse dit POURQUOI c'est ainsi et CE QUE CELA SIGNIFIE : choix formels → effets → sens. À l'écrit HIDA, la description seule ne suffit pas — il faut articuler forme et signification, montrer que la forme EST le sens.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="ecrit" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode écrit HIDA</div>
+          <div class="card-question">Comment aborder un corpus documentaire inconnu lors de l'épreuve écrite ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">1. Lire le sujet et la question avant les documents. 2. Identifier chaque doc : nature, auteur, date, contexte. 3. Repérer les liens entre les docs et avec le thème du programme. 4. Dégager une idée directrice qui répond à la question. 5. Organiser la réponse en paragraphes argumentés avec exemples tirés du corpus, jamais hors-sujet.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="ecrit" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode écrit HIDA</div>
+          <div class="card-question">Qu'est-ce qu'un "jugement esthétique argumenté" et comment le formuler ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Ce n'est pas "j'aime / je n'aime pas" mais une évaluation motivée par des critères : originalité formelle, rapport à la tradition, efficacité de la forme par rapport au propos. On peut écrire "cette œuvre me semble marquer une rupture décisive parce que…" à condition de l'argumenter avec des éléments formels et contextuels précis.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- VIOLLET-LE-DUC — cartes supplémentaires -->
+    <div class="flipcard" data-theme="viollet" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Viollet-le-Duc</div>
+          <div class="card-question">Quels sont les principaux chantiers de restauration de Viollet-le-Duc ? Citez au moins 4.</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Notre-Dame de Paris (flèche, gargouilles, galerie des chimères) · Carcassonne (cité médiévale, remparts) · Pierrefonds (château, Oise) · Vézelay (basilique Sainte-Madeleine) · Cathédrale d'Amiens · Château de Roquetaillade (Gironde). En région : château de Pupetières (Isère). Chaque chantier illustre sa méthode : comprendre le style pour le compléter.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="viollet" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Viollet-le-Duc</div>
+          <div class="card-question">Qu'est-ce que le Dictionnaire raisonné de l'architecture française (1854-1868) et pourquoi est-il fondamental ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Encyclopédie en 10 volumes qui analyse systématiquement l'architecture médiévale française (structures, matériaux, formes). Première approche scientifique et raisonnée du gothique. Il démontre que le Moyen Âge n'est pas une période obscure mais un âge d'or de l'ingénierie. Ouvrage de référence pour les architectes du XIXe et XXe siècle.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="viollet" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Viollet-le-Duc</div>
+          <div class="card-question">Quel est le débat fondamental entre Viollet-le-Duc et John Ruskin sur la restauration des monuments ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Viollet-le-Duc : restaurer c'est rétablir un état complet, parfois jamais existant — l'architecte doit comprendre l'édifice mieux que son bâtisseur. Ruskin (Angleterre) : la restauration est un mensonge, un monument authentique doit vieillir dignement jusqu'à la ruine. Ce débat fonde encore aujourd'hui les chartes du patrimoine (Charte de Venise, 1964).</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARIS — cartes supplémentaires -->
+    <div class="flipcard" data-theme="paris" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Paris capitale des arts</div>
+          <div class="card-question">Qu'est-ce que le Fauvisme et quels en sont les artistes majeurs basés à Paris ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Mouvement né au Salon d'automne de 1905 : couleur pure, non naturaliste, posée en aplats violents. Le critique Louis Vauxcelles parle de « fauves ». Artistes clés : Henri Matisse (La Danse, 1910), André Derain, Maurice de Vlaminck. Rejet de la couleur descriptive au profit de la couleur expressive — rupture fondamentale avec l'Impressionnisme.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="paris" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Paris capitale des arts</div>
+          <div class="card-question">Quel rôle jouent les Expositions universelles de Paris (1900, 1937) dans le rayonnement artistique de la ville ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">1900 : consacre l'Art Nouveau (Guimard, entrées du métro) et diffuse l'image d'une Paris cosmopolite et moderne. 1937 : confrontation idéologique (pavillons nazi et soviétique face à face) ; Picasso peint Guernica pour le pavillon espagnol. Ces expositions montrent que Paris est un espace de création mais aussi d'enjeux politiques mondiaux.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="paris" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Paris capitale des arts</div>
+          <div class="card-question">Comment la Première Guerre mondiale (1914-1918) affecte-t-elle la vie artistique parisienne ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Interruption brutale : artistes mobilisés, galeries fermées, Kahnweiler (allemand) voit ses stocks séquestrés. Certains meurent au front (Apollinaire, blessé). L'après-guerre voit un retour à l'ordre (Picasso, Derain) mais aussi l'émergence de Dada à Zurich puis Paris — réaction nihiliste au carnage. Paris reste capitale mais son hégémonie est fragilisée.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEMMES — cartes supplémentaires -->
+    <div class="flipcard" data-theme="femmes" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Femmes, féminité, féminisme</div>
+          <div class="card-question">Qu'est-ce que l'art féministe des années 1970 et sous quelles formes se manifeste-t-il ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Né aux États-Unis dans le sillage du mouvement des droits civiques et de la 2e vague féministe. Revendique la visibilité des femmes artistes et critique la domination masculine dans les institutions. Formes : body art (Carolee Schneemann), performance (Yoko Ono), installation (Judy Chicago), photographie critique (Cindy Sherman). Slogan : « The personal is political ».</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="femmes" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Femmes, féminité, féminisme</div>
+          <div class="card-question">Quelle place Berthe Morisot et Mary Cassatt occupent-elles dans l'Impressionnisme ? Quelles en sont les spécificités ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Membres à part entière du groupe impressionniste : Morisot expose dès 1874, Cassatt (américaine à Paris) intègre le cercle de Degas. Leurs sujets : intérieur bourgeois, maternité, femmes dans des espaces privés — non par contrainte de « sujets féminins » mais comme regard singulier sur un espace qu'elles habitent. Leurs œuvres dépassent le genre et posent la question de ce que voit une femme artiste.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="femmes" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Femmes, féminité, féminisme</div>
+          <div class="card-question">Comment l'art contemporain (depuis les années 1980) traite-t-il la question du corps féminin ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Le corps féminin devient sujet actif de la création, non plus objet passif du regard. Cindy Sherman (Untitled Film Stills) déjoue les stéréotypes en se mettant en scène. Louise Bourgeois (Maman, araignée géante) questionne la figure maternelle. Kiki Smith interroge le corps charnel, organique. L'art queer et postcolonial élargit encore le questionnement à l'intersectionnalité.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTHODE ORAL — cartes supplémentaires -->
+    <div class="flipcard" data-theme="oral" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode oral spé HIDA</div>
+          <div class="card-question">Comment formuler une problématique de portfolio convaincante à l'oral ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Une bonne problématique pose une tension, pas juste un thème : « En quoi… ? », « Comment… ? », « Dans quelle mesure… ? ». Elle doit être personnelle (mon choix d'œuvres), débattable (pas une évidence) et résolvable par les œuvres du portfolio. Éviter : « Qu'est-ce que le féminisme dans l'art ? » (trop large). Préférer : « Comment Kahlo fait-elle de la souffrance du corps féminin un acte de résistance politique ? »</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="oral" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode oral spé HIDA</div>
+          <div class="card-question">Comment analyser une œuvre à l'oral sans « réciter une fiche » ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Parler À l'œuvre, pas SUR l'œuvre : partir de ce qu'on voit (formes, couleurs, matière) → expliquer les choix → relier à la problématique. Utiliser le portfolio affiché à l'écran comme appui physique, pointer les éléments. La fluidité vient de l'appropriation, pas de la mémorisation mot à mot. Viser : « Je vois… ce qui me semble signifier… parce que… »</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="oral" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode oral spé HIDA</div>
+          <div class="card-question">Que faire si le jury tire le portfolio que tu maîtrises moins bien ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">C'est pour ça qu'il faut maîtriser les DEUX. Mais si ça arrive : reste calme, structure sur la problématique (que tu connais), appuie-toi sur les images visibles à l'écran, sois honnête sur tes doutes plutôt que d'inventer. Un candidat qui dit « je suis moins certain sur ce point mais je pense que… » est mieux perçu qu'un candidat qui récite mal une fiche.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="oral" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode oral spé HIDA</div>
+          <div class="card-question">Comment gérer concrètement les 10 minutes de présentation ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">~1 min : formuler la problématique + annoncer les œuvres et la logique d'ordre. ~7 min : présenter chaque œuvre (cartel, description rapide, analyse orientée problématique, lien entre les œuvres). ~2 min : synthèse — ce que l'ensemble dit de la problématique, ouverture courte. Chronomètre lors des simulations. Le jury interrompt à 10 min, arrête-toi avant.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="oral" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode oral spé HIDA</div>
+          <div class="card-question">Quelles sont les erreurs classiques à éviter absolument à l'oral spé HIDA ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">❌ Lire la problématique sur une fiche. ❌ Réciter sans regarder les images. ❌ Donner seulement des biographies d'artistes sans analyser les œuvres. ❌ Ignorer les liens entre les œuvres. ❌ Dépasser les 10 min sans conclure. ❌ Répondre « je ne sais pas » sans essayer. ❌ Confondre les cartels (dates, titres). ✅ S'entraîner à voix haute devant quelqu'un au moins 5 fois.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTHODE ÉCRIT — cartes supplémentaires -->
+    <div class="flipcard" data-theme="ecrit" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode écrit HIDA</div>
+          <div class="card-question">Quelle est la différence précise entre la Partie 1 et la Partie 2 de l'épreuve écrite ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Partie 1 (10 pts) : question portant sur des thèmes HORS programme limitatif — culture générale en histoire des arts, mobilisation de connaissances larges sur un corpus. Partie 2 (10 pts) : composition sur documents liés aux 3 questions du programme limitatif (Viollet-le-Duc, Paris, Femmes/féminité/féminisme). C'est là que ta préparation spécifique est décisive.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="ecrit" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode écrit HIDA</div>
+          <div class="card-question">Comment rédiger une introduction efficace pour la composition sur documents (Partie 2) ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">4 temps : 1) Accroche (citation, fait marquant lié au sujet). 2) Présentation du corpus (nature, dates, auteurs des documents). 3) Problématisation — reformuler la question posée en montrant l'enjeu. 4) Annonce du plan en 2 ou 3 parties. L'introduction doit tenir en ~10 lignes. Ne pas tout dire dès l'intro — laisser la démonstration pour le développement.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="ecrit" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode écrit HIDA</div>
+          <div class="card-question">Comment gérer le temps des 3h30 de l'épreuve écrite ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">~15 min : lecture complète du sujet + tous les documents. ~20 min : brouillon Partie 1 (plan, arguments). ~20 min : brouillon Partie 2. ~55 min : rédaction Partie 1. ~1h20 min : rédaction Partie 2. ~20 min : relecture + corrections. Ne pas sacrifier la Partie 1 pour la Partie 2 — elles valent le même nombre de points.</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="ecrit" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front">
+          <div class="card-theme">Méthode écrit HIDA</div>
+          <div class="card-question">Qu'est-ce qu'une « mise en perspective » dans un essai d'histoire des arts et comment la réussir ?</div>
+          <div class="card-hint">↻ cliquer pour voir</div>
+        </div>
+        <div class="flipcard-back">
+          <div class="card-theme">Réponse</div>
+          <div class="card-answer">Mettre en perspective = relier une œuvre ou un fait artistique à ce qui précède, ce qui suit, et à un contexte plus large (historique, social, artistique). Ex : montrer que Picasso et le Cubisme n'émergent pas de nulle part mais répondent à Cézanne, aux arts africains, à la crise de la représentation photographique. C'est ce qui distingue une copie « informée » d'une copie « réfléchie ».</div>
+          <div class="card-hint">↻ retourner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         VOCABULAIRE — 30 termes clés
+    ══════════════════════════════════════ -->
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Composition</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Organisation des éléments plastiques dans l'espace du tableau ou de l'œuvre : lignes directrices, équilibre, symétrie ou asymétrie, rapport plein/vide, rythme visuel. La composition oriente le regard et construit le sens.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Le Classicisme</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Courant dominant en France au XVIIe s. (règne de Louis XIV), fondé sur l'imitation de l'Antiquité gréco-romaine et la recherche de l'idéal : équilibre, clarté, mesure, raison. En peinture : Poussin, Le Brun. Il s'oppose au Baroque par sa retenue formelle. L'Académie royale en est l'institution centrale.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Le Romantisme</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Courant européen (fin XVIIIe – mi XIXe s.) qui valorise l'émotion, l'imagination, le sublime et l'individu contre la raison classique. En peinture : Géricault ("Radeau de la Méduse"), Delacroix ("La Liberté guidant le peuple"). Intérêt pour l'histoire nationale, les paysages dramatiques et l'exotisme.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Le Réalisme</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Mouvement du milieu du XIXe s. qui rejette l'idéalisation et représente le monde contemporain tel qu'il est, y compris le monde ouvrier et paysan. Courbet : "Peindre son époque." Œuvres clés : "L'Enterrement à Ornans" (Courbet), "L'Angélus" (Millet). Rupture avec la hiérarchie des genres et le grand sujet historique.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">L'Impressionnisme</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Mouvement français né en 1874 (1re exposition indépendante) qui cherche à saisir l'impression fugitive de la lumière et du moment. Technique : touche visible, couleurs vives, plein air. Artistes : Monet, Renoir, Degas, Morisot, Sisley. Rejeté par le Salon officiel, il ouvre la voie aux avant-gardes modernes.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Le Fauvisme</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Premier mouvement d'avant-garde du XXe s. (1905, Salon d'Automne). Couleurs pures et violentes, non descriptives, appliquées en aplats. La couleur n'imite plus la réalité : elle exprime. Matisse ("La Danse"), Derain, Vlaminck. Le terme "fauves" fut moqueur à l'origine (des bêtes sauvages). Influence directe sur l'Expressionnisme.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">L'Expressionnisme</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Courant né en Allemagne (début XXe s.) qui déforme la réalité pour exprimer l'angoisse, la violence intérieure et la critique sociale. Formes distordues, couleurs criardes, trait brutal. Munch ("Le Cri"), Kirchner, groupe Die Brücke. Différent du Fauvisme : ici la couleur et la forme traduisent une souffrance existentielle, pas une joie sensorielle.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Le grand genre / La hiérarchie des genres</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Classement établi par l'Académie royale (XVIIe–XIXe s.) : 1. Peinture d'histoire (sujets religieux, mythologiques, historiques) · 2. Portrait · 3. Scène de genre · 4. Paysage · 5. Nature morte. Le "grand genre" est la peinture d'histoire, seule digne d'ambition morale. Cette hiérarchie justifiait l'exclusion des femmes artistes et sera renversée par le Réalisme puis les avant-gardes.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">La scène de genre</div><div class="card-hint">↻ defintion</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">3e rang dans la hiérarchie académique : représentation de scènes de la vie quotidienne, sans héros ni sujet noble. Essor dans la peinture hollandaise du XVIIe s. (Vermeer, Steen). Réhabilitée par le Réalisme (Courbet, Millet) et l'Impressionnisme. Souvent associée aux femmes artistes, qui en étaient cantonnées — ce qui n'empêchait pas une grande subtilité (Berthe Morisot).</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">L'Académisme</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Art officiel enseigné à l'École des Beaux-Arts et récompensé par le Salon au XIXe s. : dessin précis, couleurs fondues, sujets nobles (mythologie, histoire). Bouguereau, Cabanel. Représente l'institution contre laquelle les avant-gardes (Impressionnisme, Réalisme) se définissent. Le "Salon des Refusés" (1863) est le signe de cet affrontement.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">L'Art nouveau</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Courant international (1890–1910) qui intègre les arts décoratifs à l'architecture et aux beaux-arts. Formes organiques inspirées de la nature, lignes sinueuses, ornement total. Hector Guimard (entrées du métro parisien), Victor Horta (Bruxelles), Klimt, Mucha. Lien avec Viollet-le-Duc : son idée d'une architecture ornementale et fonctionnelle à la fois.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Dada et le Surréalisme : quelles différences ?</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer"><strong>Dada</strong> (1916, Zurich) : mouvement nihiliste né de la 1re Guerre mondiale, qui détruit tout sens et toute convention artistique — provocation pure (Duchamp, "Fountain"). <strong>Surréalisme</strong> (1924, Paris, Breton) : hérite de Dada mais construit positivement : explorer l'inconscient, le rêve, le désir. Dalí, Ernst, Magritte. Le Surréalisme est une poétique là où Dada est une négation.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Iconographie / Iconologie</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer"><strong>Iconographie :</strong> identification et description des sujets représentés (personnages, objets, scènes). <strong>Iconologie</strong> (Erwin Panofsky) : interprétation du sens profond, symbolique et culturel de ces représentations. Ex : une femme à la balance = la Justice (iconographie) → valeur morale de l'équité (iconologie).</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Allégorie</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Représentation figurée d'une idée abstraite par un personnage ou une scène. Ex : une femme aux yeux bandés tenant une balance = la Justice. Les allégories féminines sont omniprésentes dans l'art occidental (La Liberté guidant le peuple de Delacroix) — sujet clé pour le thème Femmes, féminité, féminisme.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Avant-garde</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Terme militaire désignant les artistes qui rompent avec les conventions et expérimentent de nouvelles formes. L'avant-garde implique une rupture volontaire et une vision du futur de l'art. Terme clé pour Paris capitale des arts (Fauvisme, Cubisme, Dada, Surréalisme = autant d'avant-gardes successives).</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Rupture / Filiation</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer"><strong>Rupture :</strong> rejet délibéré d'une tradition ou d'un style antérieur. <strong>Filiation :</strong> continuité, héritage d'un artiste ou d'un mouvement. Une œuvre peut à la fois s'inscrire dans une filiation (citer les anciens) et marquer une rupture (les dépasser). Ce couple est essentiel pour analyser tout mouvement artistique.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Patrimoine</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Ensemble des biens culturels, matériels ou immatériels, transmis par les générations passées et reconnus comme valeur collective. La notion implique une sélection (qui décide ce qui est patrimoine ?), une conservation et une transmission. Central pour Viollet-le-Duc : le patrimoine médiéval comme héritage national à "sauver".</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Restauration / Conservation</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer"><strong>Restauration :</strong> intervention active pour restituer un état antérieur (Viollet-le-Duc). <strong>Conservation :</strong> préservation dans l'état actuel, en stoppant la dégradation sans recréer. Le débat Viollet-le-Duc / Ruskin oppose ces deux approches. La Charte de Venise (1964) fixe les principes modernes : authenticité, réversibilité.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Autoportrait</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Représentation de l'artiste par lui-même. Genre à fort enjeu identitaire : l'artiste choisit comment se montrer, avec quel regard, dans quelle posture. Pour les femmes artistes (Frida Kahlo, Sofonisba Anguissola, Vigée Le Brun), l'autoportrait est aussi une affirmation de leur existence et de leur légitimité.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">L'abstraction (art abstrait)</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Courant qui renonce à représenter le monde visible au profit de formes, couleurs et lignes autonomes. Deux grandes tendances : <strong>abstraction lyrique</strong> (expression des émotions, Kandinsky, Pollock) et <strong>abstraction géométrique</strong> (ordre, structure, Mondrian, Malevitch). L'abstraction s'impose comme langage dominant de l'art occidental après 1945 (New York, Expressionnisme abstrait).</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Installation</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Forme d'art contemporain qui investit un espace entier (galerie, rue, musée) avec des objets, sons, lumières ou médias combinés. Le spectateur est physiquement plongé dans l'œuvre. Exemples : la <em>Dinner Party</em> de Judy Chicago, les œuvres de Kusama. L'installation questionne la frontière entre art et espace vécu.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Performance</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Forme d'art où le corps de l'artiste, en action dans le temps et l'espace, constitue l'œuvre elle-même. Non reproductible, éphémère. Développée dans les années 1960-70, souvent liée aux mouvements féministes (Yoko Ono, Marina Abramović, VALIE EXPORT). La performance questionne le statut de l'œuvre et le rôle du spectateur.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Hybridation / Interdisciplinarité</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer"><strong>Hybridation :</strong> mélange de médiums, de genres ou de cultures dans une même œuvre (ex : photo + texte + objet). <strong>Interdisciplinarité :</strong> dialogue entre disciplines artistiques (danse + musique + arts plastiques). Ces notions caractérisent l'art contemporain et permettent de sortir des catégories traditionnelles.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Subversion</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Retournement d'un code, d'un signe ou d'une convention pour en dénoncer ou en déconstruire le sens. Terme clé pour le thème Femmes : des artistes subvertissent les codes du nu académique, du portrait conventionnel ou du regard masculin pour leur opposer un regard critique ou une affirmation identitaire.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Esthétique</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Au sens philosophique : discipline qui étudie la perception du beau, du sublime et de l'art. Au sens courant : l'ensemble des caractéristiques visuelles et sensibles d'une œuvre. On peut parler de "choix esthétiques" (les décisions formelles de l'artiste) ou d'un "jugement esthétique" (l'appréciation du spectateur).</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Commanditaire / Mécène</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer"><strong>Commanditaire :</strong> personne ou institution qui passe une commande à un artiste et en définit le sujet, le format, l'usage. <strong>Mécène :</strong> protecteur qui finance les artistes sans nécessairement imposer de sujet. La commande pèse sur l'œuvre — comprendre qui l'a commandée, pourquoi et pour quoi est essentiel à l'analyse.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Réception d'une œuvre</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">La façon dont une œuvre est accueillie, interprétée et valorisée par ses publics successifs — à sa création et au fil du temps. La réception varie selon les époques, les cultures, les individus. Une œuvre peut être rejetée à sa création et consacrée plus tard (Van Gogh, Manet). Analyser la réception, c'est sortir de l'œuvre seule.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Symbole / Attribut</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer"><strong>Symbole :</strong> signe qui renvoie à une réalité abstraite par convention culturelle (la colombe = la paix). <strong>Attribut :</strong> objet caractéristique qui permet d'identifier un personnage (la flèche = saint Sébastien, les ciseaux = Judith). Lire les symboles et attributs est une compétence clé de l'analyse iconographique.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Genre pictural</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Catégorie de sujets représentés en peinture, hiérarchisés par l'Académie royale (XVIIe–XIXe s.) : 1. Peinture d'histoire (mythologie, religion, histoire) · 2. Portrait · 3. Scène de genre · 4. Paysage · 5. Nature morte. Les femmes artistes étaient cantonnées aux genres "inférieurs". Cette hiérarchie est un outil de domination culturelle.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+    <div class="flipcard" data-theme="vocab" onclick="flipCard(this)">
+      <div class="flipcard-inner">
+        <div class="flipcard-front"><div class="card-theme">🔤 Vocabulaire</div><div class="card-question">Contextualisation</div><div class="card-hint">↻ définition</div></div>
+        <div class="flipcard-back"><div class="card-theme">Définition</div><div class="card-answer">Replacer une œuvre dans son époque : contexte historique, politique, social, artistique et biographique. La contextualisation éclaire les choix de l'artiste et le sens de l'œuvre — mais elle ne suffit pas : il faut aussi montrer comment la forme elle-même produit du sens, indépendamment du contexte.</div><div class="card-hint">↻ retourner</div></div>
+      </div>
+    </div>
+
+  </div><!-- /cards-grid -->
+
+</section>
+
+</main>
+
+<script>
+// ── COMPTE À REBOURS ──
+function updateCountdown() {
+  const el = document.getElementById('countdown-display');
+  if (!el) return;
+  const now = new Date();
+  const oral = new Date('2026-06-09T08:00:00');
+  const diffMs = oral - now;
+  if (diffMs <= 0) {
+    el.textContent = '🎓 Oral spé HIDA — aujourd\'hui !';
+    el.style.color = 'var(--rust)';
+    return;
+  }
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  if (days === 0) {
+    el.textContent = `🎓 Oral spé HIDA dans ${hours}h !`;
+    el.style.color = 'var(--rust)';
+  } else if (days <= 7) {
+    el.textContent = `🎓 J-${days} · Oral spé HIDA`;
+    el.style.color = 'var(--rust)';
+  } else if (days <= 14) {
+    el.textContent = `🎓 J-${days} · Oral spé HIDA`;
+    el.style.color = 'var(--ochre)';
+  } else {
+    el.textContent = `🎓 J-${days} · Oral spé HIDA`;
+    el.style.color = 'var(--light-dust)';
+  }
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
+
+function updateCountdownEcrit() {
+  const el = document.getElementById('countdown-ecrit');
+  if (!el) return;
+  const now = new Date();
+  const ecrit = new Date('2026-06-16T08:00:00');
+  const diffMs = ecrit - now;
+  if (diffMs <= 0) {
+    el.textContent = '✍️ Écrit spé HIDA — aujourd\'hui !';
+    el.style.color = 'var(--rust)';
+    return;
+  }
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  if (days === 0) {
+    el.textContent = `✍️ Écrit spé HIDA dans ${hours}h !`;
+    el.style.color = 'var(--rust)';
+  } else if (days <= 7) {
+    el.textContent = `✍️ J-${days} · Écrit spé HIDA`;
+    el.style.color = 'var(--rust)';
+  } else if (days <= 14) {
+    el.textContent = `✍️ J-${days} · Écrit spé HIDA`;
+    el.style.color = 'var(--ochre)';
+  } else {
+    el.textContent = `✍️ J-${days} · Écrit spé HIDA`;
+    el.style.color = 'var(--light-dust)';
+  }
+}
+updateCountdownEcrit();
+setInterval(updateCountdownEcrit, 60000);
+
+// ── SAVE MODAL ──
+function openSaveModal() {
+  document.getElementById('save-modal').classList.add('open');
+}
+function closeSaveModal(e) {
+  if (!e || e.target === document.getElementById('save-modal')) {
+    document.getElementById('save-modal').classList.remove('open');
+  }
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeSaveModal();
+});
+
+// ── TAB NAVIGATION ──
+function showTab(id, clickedBtn) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.bnav-btn').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  // Sync top nav
+  document.querySelectorAll('.nav-tab').forEach(t => {
+    if (t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + id + "'")) {
+      t.classList.add('active');
+    }
+  });
+  // Sync bottom nav
+  const bnav = document.getElementById('bnav-' + id);
+  if (bnav) bnav.classList.add('active');
+  // Scroll to top on mobile
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── WEEK TOGGLE ──
+function toggleWeek(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ── TASK CHECKBOX ──
+// Le onclick est sur le <li>. On stoppe la propagation si c'est la checkbox elle-même qui est cliquée
+// pour éviter le double-toggle (clic checkbox → change + clic li → toggleTask).
+function toggleTask(item, event) {
+  // Si l'événement vient directement de la checkbox, on laisse le comportement natif
+  // et on se contente de sync la classe + progression
+  const cb = item.querySelector('input[type="checkbox"]');
+  if (event && event.target === cb) {
+    // La checkbox vient d'être cochée/décochée nativement — on sync juste
+    item.classList.toggle('done', cb.checked);
+  } else {
+    // Clic sur le reste du <li> → on toggle manuellement
+    cb.checked = !cb.checked;
+    item.classList.toggle('done', cb.checked);
+  }
+  updateWeekProgress(item.closest('.week-block'));
+  saveState();
+}
+
+function updateWeekProgress(block) {
+  if (!block) return;
+  const tasks = block.querySelectorAll('.task-item');
+  const done = block.querySelectorAll('.task-item.done').length;
+  const total = tasks.length;
+  const pct = total ? (done / total * 100) : 0;
+  const fill = block.querySelector('.progress-fill');
+  const text = block.querySelector('.week-progress-text');
+  if (fill) fill.style.width = pct + '%';
+  if (text) text.textContent = done + ' / ' + total;
+}
+
+// ── FLIPCARDS ──
+// On utilise un Set de références directes aux cartes (pas des indices de position)
+const flippedCards = new Set();
+
+function flipCard(card) {
+  card.classList.toggle('flipped');
+  if (card.classList.contains('flipped')) {
+    flippedCards.add(card);
+  } else {
+    flippedCards.delete(card);
+  }
+  // On compte uniquement les cartes visibles retournées
+  const visibleFlipped = [...flippedCards].filter(c => c.style.display !== 'none').length;
+  document.getElementById('score-count').textContent = visibleFlipped;
+}
+
+function filterCards(theme, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  flippedCards.clear();
+  document.getElementById('score-count').textContent = '0';
+  let visible = 0;
+  document.querySelectorAll('.flipcard').forEach(card => {
+    const show = theme === 'all' || card.dataset.theme === theme;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+    // Remettre la carte face avant
+    card.classList.remove('flipped');
+  });
+  document.getElementById('score-total').textContent = '/ ' + visible;
+}
+
+// ── SAVE / LOAD STATE ──
+function saveState() {
+  const state = {};
+  document.querySelectorAll('.task-item').forEach((item, i) => {
+    state['task_' + i] = item.classList.contains('done');
+  });
+  localStorage.setItem('hida_planning_tasks', JSON.stringify(state));
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem('hida_planning_tasks');
+    if (!raw) return;
+    const state = JSON.parse(raw);
+    document.querySelectorAll('.task-item').forEach((item, i) => {
+      if (state['task_' + i]) {
+        item.classList.add('done');
+        item.querySelector('input[type="checkbox"]').checked = true;
+      }
+    });
+    document.querySelectorAll('.week-block').forEach(b => updateWeekProgress(b));
+  } catch(e) { console.warn('loadState error', e); }
+}
+
+function loadOral() {
+  try {
+    const raw = localStorage.getItem('hida_oral');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    document.querySelectorAll('#tab-oraux input, #tab-oraux textarea').forEach((el, i) => {
+      if (data['oral_' + i] !== undefined) el.value = data['oral_' + i];
+    });
+  } catch(e) { console.warn('loadOral error', e); }
+}
+
+function saveBilan() { saveAll(); }
+
+function loadBilan() {
+  try {
+    const raw = localStorage.getItem('hida_bilan');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    document.querySelectorAll('#tab-bilan input, #tab-bilan textarea, #tab-bilan select').forEach((el, i) => {
+      if (data['bilan_' + i] !== undefined) el.value = data['bilan_' + i];
+    });
+  } catch(e) { console.warn('loadBilan error', e); }
+}
+
+// ── CHECK LIST (onglet oraux) ──
+document.querySelectorAll('.check-list input[type="checkbox"]').forEach((cb, i) => {
+  try {
+    if (localStorage.getItem('hida_check_' + i) === '1') cb.checked = true;
+  } catch(e) {}
+  cb.addEventListener('change', () => {
+    try { localStorage.setItem('hida_check_' + i, cb.checked ? '1' : '0'); } catch(e) {}
+  });
+});
+
+// ── SAUVEGARDE GLOBALE ──
+function saveAll() {
+  try {
+    const state = {};
+    document.querySelectorAll('.task-item').forEach((item, i) => {
+      state['task_' + i] = item.classList.contains('done');
+    });
+    localStorage.setItem('hida_planning_tasks', JSON.stringify(state));
+
+    const bilanData = {};
+    document.querySelectorAll('#tab-bilan input, #tab-bilan textarea, #tab-bilan select').forEach((el, i) => {
+      bilanData['bilan_' + i] = el.value;
+    });
+    localStorage.setItem('hida_bilan', JSON.stringify(bilanData));
+
+    const oralData = {};
+    document.querySelectorAll('#tab-oraux input, #tab-oraux textarea').forEach((el, i) => {
+      oralData['oral_' + i] = el.value;
+    });
+    localStorage.setItem('hida_oral', JSON.stringify(oralData));
+
+    showToast();
+  } catch(e) {
+    alert('La sauvegarde a échoué — vérifie que ton navigateur autorise le stockage local.');
+  }
+}
+
+function showToast() {
+  const toast = document.getElementById('save-toast');
+  toast.textContent = '✓ Progression sauvegardée';
+  toast.classList.add('visible');
+  setTimeout(() => toast.classList.remove('visible'), 2200);
+}
+
+// Ctrl+S / Cmd+S
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    saveAll();
+    document.getElementById('save-modal').classList.remove('open');
+  }
+});
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  loadState();
+  loadBilan();
+  loadOral();
+  document.querySelectorAll('.week-block').forEach(b => updateWeekProgress(b));
+  // Score total = nombre réel de cartes
+  document.getElementById('score-total').textContent = '/ ' + document.querySelectorAll('.flipcard').length;
+});
+</script>
+</body>
+</html>
