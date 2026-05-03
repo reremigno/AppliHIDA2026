@@ -611,6 +611,106 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
 .fab-label { font-size: 0.72rem; }
 
 /* ── IMPRESSION ── */
+/* ══════════════════════════════════════════════
+   TABLEAU COMPARATIF ORAUX (mobile-first)
+══════════════════════════════════════════════ */
+.compare-mobile { display: flex; flex-direction: column; gap: 0; margin-bottom: 1.5rem; border: 1px solid var(--light-dust); border-radius: 8px; overflow: hidden; }
+.compare-row { display: flex; flex-direction: column; border-bottom: 1px solid var(--light-dust); }
+.compare-row:last-child { border-bottom: none; }
+.compare-subtitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dust);
+  background: rgba(26,21,16,0.05);
+  padding: 0.45rem 0.9rem;
+  border-bottom: 1px solid var(--light-dust);
+}
+.compare-cols { display: grid; grid-template-columns: 1fr 1fr; }
+.compare-cell {
+  padding: 0.7rem 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  vertical-align: top;
+}
+.compare-cell.hida { border-left: 3px solid var(--sage); background: rgba(74,103,65,0.04); }
+.compare-cell.grand { border-left: 3px solid var(--ochre); background: rgba(201,146,26,0.04); }
+.compare-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.compare-cell.hida .compare-label { color: var(--sage); }
+.compare-cell.grand .compare-label { color: var(--ochre); }
+
+/* ══════════════════════════════════════════════
+   INDICATEURS DE COMPLÉTION
+══════════════════════════════════════════════ */
+
+/* Badge ✓ dans le week-header */
+.week-complete-check {
+  display: none;
+  width: 22px;
+  height: 22px;
+  background: var(--sage);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 22px;
+  text-align: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(74,103,65,0.25);
+  animation: pop-in 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.week-block.complete .week-complete-check { display: flex; align-items: center; justify-content: center; }
+
+/* Header légèrement teinté quand complet */
+.week-block.complete .week-header { background: #1e2b1c; }
+.week-block.complete .week-label { color: #7db87a; }
+
+/* Badge sur le tab Planning (desktop) */
+.nav-complete-badge {
+  display: none;
+  background: var(--sage);
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 10px;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  line-height: 1.6;
+}
+.nav-complete-badge.visible { display: inline-block; }
+
+/* Point vert sur l'icône du tab Planning (mobile) */
+.bnav-icon { position: relative; display: inline-block; }
+.bnav-complete-dot {
+  display: none;
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  width: 8px;
+  height: 8px;
+  background: var(--sage);
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  box-shadow: 0 0 0 2px rgba(74,103,65,0.3);
+}
+.bnav-complete-dot.visible { display: block; }
+
+@keyframes pop-in {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+
 @media print {
   .nav-tabs, #bottom-nav, #fab-save, #save-modal { display: none !important; }
   .tab-section { display: block !important; page-break-before: always; }
@@ -629,12 +729,6 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
   font-size: 0.65rem;
   color: var(--light-dust);
   letter-spacing: 0.06em;
-}
-@media print {
-  .nav-tabs { display: none; }
-  .tab-section { display: block !important; page-break-before: always; }
-  .week-body { display: block !important; }
-  #fab-save, #save-modal { display: none !important; }
 }
 </style>
 </head>
@@ -688,7 +782,7 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
 </header>
 
 <nav class="nav-tabs">
-  <button class="nav-tab active" onclick="showTab('planning', this)">📅 Planning</button>
+  <button class="nav-tab active" onclick="showTab('planning', this)">📅 Planning <span id="nav-complete-badge" class="nav-complete-badge"></span></button>
   <button class="nav-tab" onclick="showTab('oraux', this)">🎭 Les deux oraux</button>
   <button class="nav-tab" onclick="showTab('bilan', this)">📖 Mon bilan</button>
   <button class="nav-tab" onclick="showTab('flipcards', this)">📚 Révisions</button>
@@ -697,7 +791,7 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
 <!-- Barre de navigation en bas — mobile only -->
 <nav id="bottom-nav">
   <button class="bnav-btn active" onclick="showTab('planning', this)" id="bnav-planning">
-    <span class="bnav-icon">📅</span>
+    <span class="bnav-icon">📅<span id="bnav-complete-badge" class="bnav-complete-dot"></span></span>
     <span class="bnav-label">Planning</span>
   </button>
   <button class="bnav-btn" onclick="showTab('oraux', this)" id="bnav-oraux">
@@ -762,6 +856,7 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
         <div class="week-title">Finaliser les portfolios</div>
       </div>
       <div class="week-toggle">▾</div>
+      <span class="week-complete-check" aria-hidden="true">✓</span>
     </div>
     <div class="week-body">
       <div class="progress-wrap">
@@ -789,6 +884,7 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
         <div class="week-title">Remise de la clé USB + entraînement oral</div>
       </div>
       <div class="week-toggle">▾</div>
+      <span class="week-complete-check" aria-hidden="true">✓</span>
     </div>
     <div class="week-body">
       <div class="progress-wrap">
@@ -820,6 +916,7 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
         <div class="week-title">Consolidation orale + premières révisions écrit</div>
       </div>
       <div class="week-toggle">▾</div>
+      <span class="week-complete-check" aria-hidden="true">✓</span>
     </div>
     <div class="week-body">
       <div class="progress-wrap">
@@ -845,6 +942,7 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
         <div class="week-title">Entraînement intensif — dernière ligne droite avant l'oral</div>
       </div>
       <div class="week-toggle">▾</div>
+      <span class="week-complete-check" aria-hidden="true">✓</span>
     </div>
     <div class="week-body">
       <div class="progress-wrap">
@@ -877,6 +975,7 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
         <div class="week-title">Oraux HIDA (1er–4 juin) puis transition vers l'écrit</div>
       </div>
       <div class="week-toggle">▾</div>
+      <span class="week-complete-check" aria-hidden="true">✓</span>
     </div>
     <div class="week-body">
       <div class="progress-wrap">
@@ -909,6 +1008,7 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
         <div class="week-title">Révisions intensives — J-8 avant l'écrit HIDA</div>
       </div>
       <div class="week-toggle">▾</div>
+      <span class="week-complete-check" aria-hidden="true">✓</span>
     </div>
     <div class="week-body">
       <div class="progress-wrap">
@@ -934,6 +1034,7 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
         <div class="week-title">Grand Oral — dernière ligne droite</div>
       </div>
       <div class="week-toggle">▾</div>
+      <span class="week-complete-check" aria-hidden="true">✓</span>
     </div>
     <div class="week-body">
       <div class="progress-wrap">
@@ -968,39 +1069,6 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
     Tu passes <strong>deux oraux différents</strong> en juin. L'oral de spécialité HIDA (du 1er au 4 juin) évalue ton travail de l'année avec tes portfolios. Le Grand Oral (fin juin) évalue ta capacité à construire et défendre une argumentation personnelle sur une question problématisée.
   </div>
 
-  <style>
-  .compare-mobile { display: flex; flex-direction: column; gap: 0; margin-bottom: 1.5rem; border: 1px solid var(--light-dust); border-radius: 8px; overflow: hidden; }
-  .compare-row { display: flex; flex-direction: column; border-bottom: 1px solid var(--light-dust); }
-  .compare-row:last-child { border-bottom: none; }
-  .compare-subtitle {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--dust);
-    background: rgba(26,21,16,0.05);
-    padding: 0.45rem 0.9rem;
-    border-bottom: 1px solid var(--light-dust);
-  }
-  .compare-cols { display: grid; grid-template-columns: 1fr 1fr; }
-  .compare-cell {
-    padding: 0.7rem 0.9rem;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    vertical-align: top;
-  }
-  .compare-cell.hida { border-left: 3px solid var(--sage); background: rgba(74,103,65,0.04); }
-  .compare-cell.grand { border-left: 3px solid var(--ochre); background: rgba(201,146,26,0.04); }
-  .compare-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.58rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 0.3rem;
-  }
-  .compare-cell.hida .compare-label { color: var(--sage); }
-  .compare-cell.grand .compare-label { color: var(--ochre); }
-  </style>
 
   <div class="compare-mobile">
 
@@ -2485,6 +2553,37 @@ function updateWeekProgress(block) {
   const text = block.querySelector('.week-progress-text');
   if (fill) fill.style.width = pct + '%';
   if (text) text.textContent = done + ' / ' + total;
+
+  // Indicateur de complétion sur le bloc
+  const wasComplete = block.classList.contains('complete');
+  const isComplete = total > 0 && done === total;
+  block.classList.toggle('complete', isComplete);
+
+  // Recalcule le badge global sur le tab Planning
+  updatePlanningBadge();
+}
+
+function updatePlanningBadge() {
+  const blocks = document.querySelectorAll('#tab-planning .week-block');
+  const total = blocks.length;
+  const completed = [...blocks].filter(b => b.classList.contains('complete')).length;
+
+  // Badge desktop (top nav)
+  const navBadge = document.getElementById('nav-complete-badge');
+  if (navBadge) {
+    if (completed > 0) {
+      navBadge.textContent = completed === total ? '✓ tout complété' : `${completed}/${total} ✓`;
+      navBadge.classList.add('visible');
+    } else {
+      navBadge.classList.remove('visible');
+    }
+  }
+
+  // Point mobile (bottom nav)
+  const dot = document.getElementById('bnav-complete-badge');
+  if (dot) {
+    dot.classList.toggle('visible', completed > 0);
+  }
 }
 
 // ── FLIPCARDS ──
@@ -2626,6 +2725,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadBilan();
   loadOral();
   document.querySelectorAll('.week-block').forEach(b => updateWeekProgress(b));
+  updatePlanningBadge();
   // Score total = nombre réel de cartes
   document.getElementById('score-total').textContent = '/ ' + document.querySelectorAll('.flipcard').length;
 });
