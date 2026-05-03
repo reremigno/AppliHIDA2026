@@ -758,7 +758,7 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
   <div class="week-block open" id="week1">
     <div class="week-header" onclick="toggleWeek('week1')">
       <div>
-        <div class="week-label">Semaine 1 · 1–4 mai 2026</div>
+        <div class="week-label">Semaine 1 · 4–10 mai 2026</div>
         <div class="week-title">Finaliser les portfolios</div>
       </div>
       <div class="week-toggle">▾</div>
@@ -785,17 +785,22 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
   <div class="week-block" id="week2">
     <div class="week-header" onclick="toggleWeek('week2')">
       <div>
-        <div class="week-label">Semaine 2 · 5–11 mai 2026</div>
-        <div class="week-title">Remise de la clé USB + premier entraînement oral</div>
+        <div class="week-label">Semaine 2 · 11–17 mai 2026</div>
+        <div class="week-title">Remise de la clé USB + entraînement oral</div>
       </div>
       <div class="week-toggle">▾</div>
     </div>
     <div class="week-body">
       <div class="progress-wrap">
-        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 7</span></div>
+        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 8</span></div>
         <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
       </div>
+      <div class="alert-box" style="margin-bottom:0.8rem">
+        <strong>📌 Vendredi 15 mai au plus tard — Remise de la clé USB</strong>
+        Remise de la clé USB à ton professeur, visée et tamponnée. Ne pas oublier le dossier imprimé (cartels + document de synthèse).
+      </div>
       <ul class="task-list">
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">🔑 Remettre la clé USB au plus tard le vendredi 15 mai — confirme avec ton prof que c'est bien reçu et enregistré</span><span class="task-tag tag-urgent">Urgent</span></li>
         <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">S'entraîner à présenter les 2 portfolios : 15 min par portfolio, sans notes, en incluant la problématique et le fil conducteur des œuvres</span><span class="task-tag tag-oral">Oral</span></li>
         <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Mémoriser pour chaque œuvre : artiste, date, contexte, ce qui la relie à la problématique</span><span class="task-tag tag-oral">Oral</span></li>
         <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer une liste de 5 à 8 questions que le jury pourrait poser sur chaque portfolio</span><span class="task-tag tag-oral">Oral</span></li>
@@ -811,18 +816,17 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
   <div class="week-block" id="week3">
     <div class="week-header" onclick="toggleWeek('week3')">
       <div>
-        <div class="week-label">Semaine 3 · 12–18 mai 2026</div>
+        <div class="week-label">Semaine 3 · 18–24 mai 2026</div>
         <div class="week-title">Consolidation orale + premières révisions écrit</div>
       </div>
       <div class="week-toggle">▾</div>
     </div>
     <div class="week-body">
       <div class="progress-wrap">
-        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 7</span></div>
-        Remise de la clé USB à ton professeur, visée et tamponnée. Ne pas oublier le dossier imprimé (cartels + document de synthèse).
+        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 6</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
       </div>
       <ul class="task-list">
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">🔑 Remettre la clé USB au plus tard le 15 mai — confirme avec ton prof que c'est bien reçu et enregistré</span><span class="task-tag tag-urgent">Urgent</span></li>
         <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Première simulation d'oral complète (30 min chrono) — présenter le portfolio tiré au sort, sans s'arrêter</span><span class="task-tag tag-oral">Oral</span></li>
         <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Travailler les transitions entre les œuvres : montrer le fil conducteur, pas juste décrire chaque image</span><span class="task-tag tag-oral">Oral</span></li>
         <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Commencer les fiches de révision pour l'écrit : repères chronologiques des 3 thèmes (Viollet-le-Duc, Paris, Femmes)</span><span class="task-tag tag-ecrit">Écrit</span></li>
@@ -837,8 +841,8 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
   <div class="week-block" id="week4">
     <div class="week-header" onclick="toggleWeek('week4')">
       <div>
-        <div class="week-label">Semaine 4 · 19–25 mai 2026</div>
-        <div class="week-title">Approfondissement oral + préparation écrit</div>
+        <div class="week-label">Semaine 4 · 25–31 mai 2026</div>
+        <div class="week-title">Entraînement intensif — dernière ligne droite avant l'oral</div>
       </div>
       <div class="week-toggle">▾</div>
     </div>
@@ -847,16 +851,20 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
         <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 9</span></div>
         <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
       </div>
+      <div class="alert-box" style="margin-bottom:0.8rem">
+        <strong>⚠ L'oral HIDA commence lundi 1er juin — dans 3 jours !</strong>
+        Cette semaine se termine la veille des oraux. Finalise ta préparation, soigne ton sommeil les dernières nuits. Pas de nouvelles choses à apprendre — consolide ce que tu sais déjà.
+      </div>
       <ul class="task-list">
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Simulation d'oral complète (30 min) avec un camarade ou en famille — présenter le portfolio tiré au sort et répondre aux questions</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Simulation d'oral complète × 2 cette semaine (30 min chrono) — varier le portfolio présenté (tu tires au sort le jour J !)</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Travailler la posture : regarder le jury, parler sans notes, gérer le temps — <strong>15 min</strong> de présentation + 15 min d'entretien</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Vérifier que ta copie papier du portfolio est propre et complète (en cas de panne numérique)</span><span class="task-tag tag-portfolio">Portfolio</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer ce que tu apportes le jour J : clé USB de secours, dossier imprimé, document de synthèse de classe</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer sa réponse à "Pourquoi ce choix de portfolio / de problématique ?" — réponse personnelle et argumentée</span><span class="task-tag tag-oral">Oral</span></li>
         <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Réviser les repères chronologiques des 3 thèmes : Viollet-le-Duc, Paris capitale des arts, Femmes/féminité/féminisme</span><span class="task-tag tag-ecrit">Écrit</span></li>
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">S'entraîner sur des annales de l'écrit HIDA (format : 2 parties sur corpus documentaire, 10 pts chacune)</span><span class="task-tag tag-ecrit">Écrit</span></li>
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Rédiger une fiche synthèse Viollet-le-Duc : dates clés, œuvres majeures, enjeux patrimoniaux</span><span class="task-tag tag-ecrit">Écrit</span></li>
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Rédiger une fiche synthèse Paris capitale des arts 1900-1950 : mouvements, lieux, artistes clés</span><span class="task-tag tag-ecrit">Écrit</span></li>
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Rédiger une fiche synthèse Femmes, féminité, féminisme : œuvres, artistes, enjeux</span><span class="task-tag tag-ecrit">Écrit</span></li>
-        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Grand Oral : s'entraîner à la présentation de <strong>10 minutes</strong> sur sa question HIDA (nouvelle durée depuis 2024)</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
-        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer sa réponse à "Pourquoi ce choix de portfolio / de problématique ?" — réponse personnelle et argumentée</span><span class="task-tag tag-oral">Oral</span></li>
-        <li class="task-item priority-basse" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Plages révision 2e spécialité (prévoir minimum 2h cette semaine)</span><span class="task-tag tag-revision">Révision</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Rédiger (ou finaliser) les 3 fiches de synthèse si ce n'est pas encore fait</span><span class="task-tag tag-ecrit">Écrit</span></li>
+        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer des réponses sur ses projets post-bac — le jury peut les évoquer pendant l'entretien</span><span class="task-tag tag-oral">Oral</span></li>
+        <li class="task-item priority-basse" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Dormir suffisamment les 3 nuits avant le 1er juin 🌙</span><span class="task-tag tag-revision">Bien-être</span></li>
       </ul>
     </div>
   </div>
@@ -865,8 +873,8 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
   <div class="week-block" id="week5">
     <div class="week-header" onclick="toggleWeek('week5')">
       <div>
-        <div class="week-label">Semaine 5 · 26 mai – 1er juin 2026</div>
-        <div class="week-title">Entraînement intensif + 1er jour d'oral HIDA</div>
+        <div class="week-label">Semaine 5 · 1er–7 juin 2026</div>
+        <div class="week-title">Oraux HIDA (1er–4 juin) puis transition vers l'écrit</div>
       </div>
       <div class="week-toggle">▾</div>
     </div>
@@ -876,42 +884,11 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
         <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
       </div>
       <div class="alert-box" style="margin-bottom:0.8rem">
-        <strong>⚠ Attention — L'oral commence le 1er juin !</strong>
-        Cette semaine se termine le jour même du début des oraux. Finalise ta préparation avant le week-end, et soigne ton sommeil les dernières nuits. C'est la dernière ligne droite.
+        <strong>🎤 Oraux HIDA — 1er, 2, 3 ou 4 juin</strong>
+        Ton passage a lieu sur l'une de ces quatre dates selon ta convocation. Après l'oral, bascule immédiatement sur la préparation de l'écrit du 16 juin — il te reste 12 jours.
       </div>
       <ul class="task-list">
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Simulation d'oral complète × 2 cette semaine — varier le portfolio présenté (tu tires au sort le jour J !)</span><span class="task-tag tag-oral">Oral</span></li>
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Travailler la posture : regarder le jury, parler sans notes, gérer le temps (<strong>15 min</strong> de présentation + 15 min d'entretien)</span><span class="task-tag tag-oral">Oral</span></li>
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Vérifier que ta copie papier du portfolio est propre et complète (en cas de panne numérique)</span><span class="task-tag tag-portfolio">Portfolio</span></li>
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer ce que tu apportes le jour J : clé USB (copie), dossier imprimé, document de synthèse de classe</span><span class="task-tag tag-oral">Oral</span></li>
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Préparer des réponses sur ses projets post-bac — le jury peut les évoquer pendant l'échange (10 min), sans phase dédiée séparée</span><span class="task-tag tag-oral">Oral</span></li>
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">🎤 ORAL HIDA — 1er juin (pour certains selon convocation). Tu as assuré !</span><span class="task-tag tag-urgent">J-DAY</span></li>
-        <li class="task-item priority-moyenne" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Grand Oral : simulation de 20 min de préparation + 10 min de présentation + 10 min d'échange avec quelqu'un</span><span class="task-tag tag-grand-oral">Grand Oral</span></li>
-        <li class="task-item priority-basse" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Dormir suffisamment les 3 nuits avant le 1er juin 🌙</span><span class="task-tag tag-revision">Bien-être</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- SEMAINE 6 -->
-  <div class="week-block" id="week6">
-    <div class="week-header" onclick="toggleWeek('week6')">
-      <div>
-        <div class="week-label">Semaine 6 · 2–8 juin 2026</div>
-        <div class="week-title">Oraux HIDA (2–4 juin) puis transition vers l'écrit</div>
-      </div>
-      <div class="week-toggle">▾</div>
-    </div>
-    <div class="week-body">
-      <div class="progress-wrap">
-        <div class="progress-label"><span>Progression</span><span class="week-progress-text">0 / 8</span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-      </div>
-      <div class="alert-box" style="margin-bottom:0.8rem">
-        <strong>🎤 Oraux HIDA — 2, 3 ou 4 juin</strong>
-        Les passages continuent sur ces trois jours selon la convocation. Après ton oral, bascule immédiatement sur la préparation de l'écrit du 16 juin — tu as 12 jours.
-      </div>
-      <ul class="task-list">
-        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">🎤 ORAL HIDA — 2, 3 ou 4 juin (selon ta convocation). Tu as assuré !</span><span class="task-tag tag-urgent">J-DAY</span></li>
+        <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">🎤 ORAL HIDA — 1er, 2, 3 ou 4 juin (selon ta convocation). Tu as assuré !</span><span class="task-tag tag-urgent">J-DAY</span></li>
         <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Après l'oral : noter immédiatement les questions posées par le jury (utile pour l'écrit et le Grand Oral)</span><span class="task-tag tag-oral">Oral</span></li>
         <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Débriefer mentalement : ce qui a bien marché, ce que tu reformulerais — note-le pour le Grand Oral</span><span class="task-tag tag-oral">Oral</span></li>
         <li class="task-item priority-haute" onclick="toggleTask(this, event)"><input type="checkbox"><span class="task-text">Révision intensive pour l'écrit du 16 juin : revoir les 3 thèmes en profondeur, analyser un corpus d'images</span><span class="task-tag tag-ecrit">Écrit</span></li>
@@ -923,12 +900,13 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
     </div>
   </div>
 
-  <!-- SEMAINE 7 -->
-  <div class="week-block" id="week7">
-    <div class="week-header" onclick="toggleWeek('week7')">
+
+  <!-- SEMAINE 6 -->
+  <div class="week-block" id="week6">
+    <div class="week-header" onclick="toggleWeek('week6')">
       <div>
-        <div class="week-label">Semaine 7 · 9–15 juin 2026</div>
-        <div class="week-title">Révisions intensives — J-7 avant l'écrit HIDA</div>
+        <div class="week-label">Semaine 6 · 8–14 juin 2026</div>
+        <div class="week-title">Révisions intensives — J-8 avant l'écrit HIDA</div>
       </div>
       <div class="week-toggle">▾</div>
     </div>
@@ -949,8 +927,8 @@ kbd { display: inline-block; background: var(--ink); color: var(--paper); font-f
   </div>
 
   <!-- APRÈS -->
-  <div class="week-block" id="week8">
-    <div class="week-header" onclick="toggleWeek('week8')">
+  <div class="week-block" id="week7">
+    <div class="week-header" onclick="toggleWeek('week7')">
       <div>
         <div class="week-label">Après le 16 juin · Jusqu'au Grand Oral</div>
         <div class="week-title">Grand Oral — dernière ligne droite</div>
